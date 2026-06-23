@@ -191,6 +191,8 @@ export interface DashboardStats {
   appointments_total: number;
   review_queue_size: number;
   open_tasks: number;
+  providers_total: number;
+  leakage_flagged: number;
 }
 
 export interface TaskItem {
@@ -206,8 +208,48 @@ export interface TaskItem {
   created_at: string;
 }
 
+export interface Provider {
+  id: string;
+  name: string;
+  specialty: string;
+  accepted_insurances: string[];
+  location: string | null;
+  in_network: boolean;
+  weekly_capacity: number;
+  current_wait_days: number;
+  is_active: boolean;
+}
+
+export interface MatchCandidate {
+  provider_id: string;
+  name: string;
+  specialty: string;
+  in_network: boolean;
+  accepts_insurance: boolean;
+  wait_days: number;
+  score: number;
+  reasons: string[];
+}
+
+export interface MatchResult {
+  referral_id: string;
+  specialty: string | null;
+  insurance: string | null;
+  leakage_risk: boolean;
+  in_network: boolean;
+  accepts_insurance: boolean;
+  score: number;
+  chosen: MatchCandidate | null;
+  candidates: MatchCandidate[];
+}
+
 export const api = {
   dashboard: () => request<DashboardStats>("/dashboard/overview"),
+  listProviders: () => request<Provider[]>("/providers"),
+  createProvider: (body: Record<string, unknown>) =>
+    request<Provider>("/providers", { method: "POST", body: JSON.stringify(body) }),
+  matchProvider: (referral_id: string) =>
+    request<MatchResult>("/providers/match", { method: "POST", body: JSON.stringify({ referral_id }) }),
   listTasks: (params: { status?: string; mine?: boolean } = {}) => {
     const q = new URLSearchParams();
     if (params.status) q.set("status_filter", params.status);

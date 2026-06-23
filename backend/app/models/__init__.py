@@ -8,6 +8,7 @@ from app.models.operations import (
     Task,
 )
 from app.models.organization import Organization, User
+from app.models.provider import Provider, ProviderMatch
 from app.models.referral import ExtractedData, Referral, ReferralDocument
 from app.models.workflow import Workflow, WorkflowExecution, WorkflowNode
 
@@ -15,6 +16,8 @@ __all__ = [
     "Organization",
     "User",
     "RefreshSession",
+    "Provider",
+    "ProviderMatch",
     "Referral",
     "ReferralDocument",
     "ExtractedData",

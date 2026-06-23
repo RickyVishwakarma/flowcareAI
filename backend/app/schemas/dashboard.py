@@ -26,3 +26,5 @@ class DashboardStats(BaseModel):
     appointments_total: int
     review_queue_size: int
     open_tasks: int
+    providers_total: int
+    leakage_flagged: int

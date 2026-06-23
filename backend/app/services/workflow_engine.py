@@ -128,6 +128,22 @@ def _act_verify_insurance(db, execution, node, ctx):
     return {"insurance_status": record.status.value, "active": record.coverage_active}
 
 
+@action("match_provider")
+def _act_match_provider(db, execution, node, ctx):
+    from app.services import matching
+
+    referral = db.get(Referral, ctx["referral_id"])
+    record = matching.run_and_store(db, referral)
+    ctx["match"] = {
+        "provider_id": record.provider_id,
+        "leakage_risk": record.leakage_risk,
+        "in_network": record.in_network,
+        "specialty": record.specialty,
+        "score": record.score,
+    }
+    return ctx["match"]
+
+
 @action("schedule_appointment")
 def _act_schedule(db, execution, node, ctx):
     appt = scheduling.schedule(

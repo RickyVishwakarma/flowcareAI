@@ -50,6 +50,9 @@ Status legend: ✅ done · 🔶 partial · ⬜ planned
   workflow success, insurance-active, avg confidence, review/tasks counts)
 - ✅ **Task inbox / work queue** — claim, status, priority, filters; surfaces
   workflow-created tasks; audited
+- ✅ **Provider matching + leakage detection** — provider directory; matcher ranks by
+  specialty/insurance/network/availability; flags out-of-network "leakage"; `match_provider`
+  workflow action; leakage KPI on the dashboard
 - ⬜ SLA/aging timers, referring-provider scorecards, closed-loop tracking
 
 ## Phase 6 — Quality & CI ✅ / 🔶

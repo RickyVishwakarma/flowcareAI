@@ -217,6 +217,40 @@ CREATE TABLE tasks (
 );
 CREATE INDEX idx_tasks_org_status ON tasks(organization_id, status);
 
+-- Provider directory + referral→provider match records (leakage detection).
+CREATE TABLE providers (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    name            VARCHAR(255) NOT NULL,
+    specialty       VARCHAR(64) NOT NULL,
+    accepted_insurances JSONB NOT NULL DEFAULT '[]',
+    location        VARCHAR(255),
+    in_network      BOOLEAN NOT NULL DEFAULT TRUE,
+    weekly_capacity INTEGER NOT NULL DEFAULT 20,
+    current_wait_days INTEGER NOT NULL DEFAULT 7,
+    is_active       BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_providers_org ON providers(organization_id);
+CREATE INDEX idx_providers_specialty ON providers(specialty);
+
+CREATE TABLE provider_matches (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    referral_id     UUID NOT NULL REFERENCES referrals(id) ON DELETE CASCADE,
+    provider_id     UUID REFERENCES providers(id) ON DELETE SET NULL,
+    specialty       VARCHAR(64),
+    in_network      BOOLEAN NOT NULL DEFAULT FALSE,
+    accepts_insurance BOOLEAN NOT NULL DEFAULT FALSE,
+    leakage_risk    BOOLEAN NOT NULL DEFAULT FALSE,
+    score           DOUBLE PRECISION NOT NULL DEFAULT 0,
+    candidates      JSONB NOT NULL DEFAULT '[]',
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_matches_referral ON provider_matches(referral_id);
+CREATE INDEX idx_matches_leakage ON provider_matches(leakage_risk);
+
 -- Immutable audit trail. Revoke UPDATE/DELETE at the DB role level in prod.
 CREATE TABLE audit_logs (
     id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api, type Referral, type ReferralDetail } from "@/lib/api";
+import { api, type MatchResult, type Referral, type ReferralDetail } from "@/lib/api";
 
 const STATUS_COLORS: Record<string, string> = {
   received: "bg-slate-100 text-slate-700",
@@ -15,6 +15,8 @@ const STATUS_COLORS: Record<string, string> = {
 export default function ReferralsPage() {
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [selected, setSelected] = useState<ReferralDetail | null>(null);
+  const [match, setMatch] = useState<MatchResult | null>(null);
+  const [matching, setMatching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -47,7 +49,21 @@ export default function ReferralsPage() {
   }
 
   async function view(id: string) {
+    setMatch(null);
     setSelected(await api.getReferral(id));
+  }
+
+  async function findProvider() {
+    if (!selected) return;
+    setMatching(true);
+    setError(null);
+    try {
+      setMatch(await api.matchProvider(selected.id));
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setMatching(false);
+    }
   }
 
   return (
@@ -134,6 +150,47 @@ export default function ReferralsPage() {
             ) : (
               <p className="mt-3 text-sm text-slate-500">Still processing…</p>
             )}
+
+            {/* Provider matching */}
+            <div className="mt-4 border-t border-slate-100 pt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-slate-700">Provider match</span>
+                <button
+                  onClick={findProvider}
+                  disabled={matching}
+                  className="rounded-md border border-slate-300 px-3 py-1 text-xs font-medium hover:border-brand disabled:opacity-50"
+                >
+                  {matching ? "Matching…" : "Find provider"}
+                </button>
+              </div>
+              {match && (
+                <div className="mt-2 space-y-2 text-sm">
+                  {match.leakage_risk && (
+                    <p className="rounded-md bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700">
+                      ⚠ Leakage risk — no in-network provider serves this patient
+                      {match.specialty ? ` (${match.specialty}` : ""}
+                      {match.insurance ? ` · ${match.insurance})` : match.specialty ? ")" : ""}
+                    </p>
+                  )}
+                  {match.chosen ? (
+                    <div className="rounded-md bg-slate-50 p-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{match.chosen.name}</span>
+                        <span className={`rounded-full px-2 py-0.5 text-xs ${match.chosen.in_network ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                          {match.chosen.in_network ? "in-network" : "out-of-network"}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500">
+                        {match.chosen.specialty} · {match.chosen.wait_days}d wait · score {match.chosen.score}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-400">{match.chosen.reasons.join(" · ")}</p>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-400">No matching provider found for this referral.</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

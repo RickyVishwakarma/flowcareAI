@@ -39,7 +39,41 @@ def seed(db: Session) -> None:
         logger.info("Seeded admin user %s", settings.first_admin_email)
 
     _seed_sample_workflow(db, org.id)
+    _seed_providers(db, org.id)
     db.commit()
+
+
+def _seed_providers(db: Session, org_id: str) -> None:
+    from app.models.provider import Provider
+
+    existing = db.execute(
+        select(Provider).where(Provider.organization_id == org_id)
+    ).first()
+    if existing:
+        return
+
+    providers = [
+        # In-network, broad insurance acceptance → cardiology referrals match cleanly.
+        Provider(organization_id=org_id, name="Bay Cardiology — Dr. Chen", specialty="cardiology",
+                 accepted_insurances=["Aetna", "Blue Shield", "Cigna", "United", "Humana"],
+                 location="San Francisco", in_network=True, current_wait_days=4),
+        # OUT-of-network only → neurology referrals flag leakage risk.
+        Provider(organization_id=org_id, name="Neuro Partners — Dr. Okafor", specialty="neurology",
+                 accepted_insurances=["Aetna", "Cigna"],
+                 location="Oakland", in_network=False, current_wait_days=9),
+        # In-network but narrow insurance → ortho leaks unless insurance is Cigna/United.
+        Provider(organization_id=org_id, name="Summit Orthopedics — Dr. Patel", specialty="orthopedics",
+                 accepted_insurances=["Cigna", "United"],
+                 location="San Jose", in_network=True, current_wait_days=6),
+        Provider(organization_id=org_id, name="Endocrine Care — Dr. Reyes", specialty="endocrinology",
+                 accepted_insurances=["Kaiser", "Aetna", "Humana"],
+                 location="San Francisco", in_network=True, current_wait_days=8),
+        Provider(organization_id=org_id, name="Lung & Chest — Dr. Muller", specialty="pulmonology",
+                 accepted_insurances=["Humana", "United", "Blue Shield"],
+                 location="Berkeley", in_network=True, current_wait_days=5),
+    ]
+    db.add_all(providers)
+    logger.info("Seeded %d demo providers", len(providers))
 
 
 def _seed_sample_workflow(db: Session, org_id: str) -> None:

@@ -41,7 +41,12 @@ export default function DashboardPage() {
         <Kpi label="Workflow success" value={pct(stats.workflow_success_rate)} sub={`${stats.workflow_total} runs`} />
         <Kpi label="Insurance active" value={pct(stats.insurance_active_rate)} sub={`${stats.insurance_active}/${stats.insurance_total}`} />
         <Kpi label="Appointments" value={stats.appointments_total} />
-        <Kpi label="Avg confidence" value={stats.avg_confidence != null ? pct(stats.avg_confidence) : "—"} />
+        <Kpi
+          label="Leakage flagged"
+          value={stats.leakage_flagged}
+          sub={`${stats.providers_total} providers`}
+          accent={stats.leakage_flagged > 0 ? "amber" : undefined}
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

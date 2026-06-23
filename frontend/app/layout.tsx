@@ -30,6 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/tasks" className="text-sm text-slate-600 hover:text-brand">
               Tasks
             </Link>
+            <Link href="/providers" className="text-sm text-slate-600 hover:text-brand">
+              Providers
+            </Link>
             <Link href="/workflows" className="text-sm text-slate-600 hover:text-brand">
               Workflow Builder
             </Link>

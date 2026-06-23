@@ -3,7 +3,16 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from app.api.v1 import auth, dashboard, operations, referrals, review, tasks, workflows
+from app.api.v1 import (
+    auth,
+    dashboard,
+    operations,
+    providers,
+    referrals,
+    review,
+    tasks,
+    workflows,
+)
 
 api_router = APIRouter()
 api_router.include_router(auth.router)
@@ -13,3 +22,4 @@ api_router.include_router(workflows.router)
 api_router.include_router(operations.router)
 api_router.include_router(dashboard.router)
 api_router.include_router(tasks.router)
+api_router.include_router(providers.router)

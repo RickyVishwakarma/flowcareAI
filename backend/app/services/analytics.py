@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.models.base import ExecutionStatus, ReferralStatus
 from app.models.operations import Appointment, InsuranceVerification, Task
+from app.models.provider import Provider, ProviderMatch
 from app.models.referral import ExtractedData, Referral
 from app.models.workflow import Workflow, WorkflowExecution
 
@@ -93,6 +94,17 @@ def overview(db: Session, organization_id: str) -> dict:
         .where(Task.organization_id == organization_id, Task.status == "open")
     ).scalar() or 0
 
+    providers_total = db.execute(
+        select(func.count())
+        .select_from(Provider)
+        .where(Provider.organization_id == organization_id)
+    ).scalar() or 0
+    leakage_flagged = db.execute(
+        select(func.count())
+        .select_from(ProviderMatch)
+        .where(ProviderMatch.referral_id == Referral.id, ProviderMatch.leakage_risk.is_(True), org)
+    ).scalar() or 0
+
     return {
         "referrals_total": referrals_total,
         "referrals_by_status": referrals_by_status,
@@ -110,4 +122,6 @@ def overview(db: Session, organization_id: str) -> dict:
         "appointments_total": int(appointments_total),
         "review_queue_size": referrals_by_status.get(ReferralStatus.NEEDS_REVIEW.value, 0),
         "open_tasks": int(open_tasks),
+        "providers_total": int(providers_total),
+        "leakage_flagged": int(leakage_flagged),
     }

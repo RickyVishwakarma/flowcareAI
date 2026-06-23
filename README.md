@@ -61,8 +61,8 @@ high-value capabilities health systems actually pay for.
 
 ### Routing & matching
 - ✅ **Visual workflow engine** — drag-and-drop triggers, conditions, and actions
-- 🔭 **Smart provider matching** — by specialty, accepted insurance, location, and wait time
-- 🔭 **Referral leakage prevention** — detect out-of-network routing and keep patients in-network
+- ✅ **Smart provider matching** — ranks providers by specialty, accepted insurance, network, and wait time
+- ✅ **Referral leakage detection** — flags when no in-network provider can serve the patient (lost revenue)
 
 ### Insurance & money
 - ✅ **Eligibility verification** — coverage, eligibility, policy status (mock payer; pluggable to a real clearinghouse)
