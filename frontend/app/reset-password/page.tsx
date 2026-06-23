@@ -43,7 +43,7 @@ function ResetInner() {
   }
 
   return (
-    <div className="mx-auto max-w-sm">
+    <div className="mx-auto mt-10 max-w-sm card p-8">
       <h1 className="text-2xl font-bold">Choose a new password</h1>
       <form onSubmit={onSubmit} className="mt-6 space-y-4">
         <div>

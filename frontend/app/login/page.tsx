@@ -28,7 +28,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto max-w-sm">
+    <div className="mx-auto mt-10 max-w-sm card p-8">
       <h1 className="text-2xl font-bold">Sign in</h1>
       <p className="mt-1 text-sm text-slate-600">Seeded demo: admin@flowcare.ai / admin12345</p>
       <form onSubmit={onSubmit} className="mt-6 space-y-4">

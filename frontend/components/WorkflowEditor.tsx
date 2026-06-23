@@ -275,7 +275,7 @@ export function WorkflowEditor({
   const CANVAS_H = 1600;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 top-14 z-20 flex flex-col gap-3 bg-slate-100 p-4">
+    <div className="fixed inset-x-0 bottom-0 top-16 z-20 flex flex-col gap-3 bg-slate-100 p-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
         <span className="text-sm font-semibold text-slate-700">Editing:</span>

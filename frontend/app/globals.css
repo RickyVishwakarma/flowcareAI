@@ -4,8 +4,46 @@
 
 :root {
   color-scheme: light;
+  --font-sans: "Inter";
+  --font-display: "Plus Jakarta Sans";
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply bg-slate-50 text-slate-600 antialiased;
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-2.5
+           text-sm font-semibold text-white shadow-soft transition
+           hover:bg-brand-dark hover:shadow-none focus:outline-none focus:ring-2 focus:ring-brand/40;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-200
+           bg-white px-5 py-2.5 text-sm font-semibold text-ink transition
+           hover:border-brand hover:text-brand;
+  }
+  .card {
+    @apply rounded-2xl border border-slate-100 bg-white shadow-card;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/5
+           px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-dark;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 bg-clip-text text-transparent;
+  }
+  /* Break a section out of the centered container to span the full viewport. */
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
 }

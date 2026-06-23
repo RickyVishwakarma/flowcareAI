@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="mx-auto max-w-sm">
+    <div className="mx-auto mt-10 max-w-sm card p-8">
       <h1 className="text-2xl font-bold">Reset your password</h1>
       {sent ? (
         <div className="mt-4 space-y-3">
