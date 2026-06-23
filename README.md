@@ -168,6 +168,7 @@ Seeded admin login: **`admin@flowcare.ai`** / **`admin12345`**
 .\tasks.ps1 setup    # one-time: venv + deps
 .\tasks.ps1 test     # backend suite (21 passing, 87% coverage)
 .\tasks.ps1 ci       # full CI locally: backend tests+coverage + frontend typecheck+build
+.\tasks.ps1 migrate  # apply Alembic migrations (Postgres/prod)
 .\tasks.ps1 api      # API on :8000  (SQLite + in-memory queue, no Redis needed)
 .\tasks.ps1 web      # frontend on :3000
 ```

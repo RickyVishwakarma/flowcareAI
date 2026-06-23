@@ -62,8 +62,11 @@ Status legend: ✅ done · 🔶 partial · ⬜ planned
 - 🔶 Frontend unit/component tests (Vitest) — planned
 - ⬜ Ruff lint gate, Playwright E2E
 
-## Phase 7 — Hardening & scale ⬜
-- ⬜ Alembic migrations; partition audit_logs / executions by month
+## Phase 7 — Hardening & scale 🔶
+- ✅ **Alembic migrations** — versioned schema owned by migrations on Postgres/prod
+  (one-shot `migrate` service in Docker, CI verifies apply+rollback, `.\tasks.ps1 migrate`);
+  SQLite dev/test keeps `create_all` for convenience
+- ⬜ Partition audit_logs / executions by month
 - ⬜ Redis eligibility cache + idempotency keys; PgBouncer; read replicas
 - ⬜ Autoscale workers on queue depth; load test to 1M referrals/month
 - ⬜ Rate limiting, RLS, field-level PHI encryption, signed document URLs

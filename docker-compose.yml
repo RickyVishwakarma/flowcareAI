@@ -7,9 +7,10 @@ services:
       POSTGRES_USER: flowcare
       POSTGRES_PASSWORD: flowcare
       POSTGRES_DB: flowcare
+    # Schema is owned by Alembic migrations (see the `migrate` service), not by
+    # an init script — db/schema.sql is kept only as a human-readable reference.
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     ports:
       - "5432:5432"
     healthcheck:
@@ -40,6 +41,16 @@ services:
     volumes:
       - miniodata:/data
 
+  # One-shot: apply Alembic migrations, then exit. Everything else waits on it.
+  migrate:
+    build: ./backend
+    command: alembic upgrade head
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://flowcare:flowcare@db:5432/flowcare
+    depends_on:
+      db: {condition: service_healthy}
+
   api:
     build: ./backend
     env_file: .env
@@ -53,6 +64,7 @@ services:
     depends_on:
       db: {condition: service_healthy}
       redis: {condition: service_healthy}
+      migrate: {condition: service_completed_successfully}
     ports:
       - "8000:8000"
 
@@ -68,6 +80,7 @@ services:
       S3_ENDPOINT_URL: http://minio:9000
     depends_on:
       db: {condition: service_healthy}
+      migrate: {condition: service_completed_successfully}
       redis: {condition: service_healthy}
 
   nginx:

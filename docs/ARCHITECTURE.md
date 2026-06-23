@@ -213,7 +213,11 @@ Production-shaped auth:
   to the monitoring network).
 - API + workers scale horizontally and independently (`api`, `worker` replicas).
 - Managed Postgres (primary + read replica), managed Redis (or cluster), S3 for blobs.
-- Migrations via Alembic in a pre-deploy job; `schema.sql` seeds fresh envs.
+- **Alembic migrations own the schema** on Postgres/prod: the Docker `migrate`
+  service runs `alembic upgrade head` (and api/worker wait on it via
+  `service_completed_successfully`) before the app starts. `db/schema.sql` is kept
+  as a human-readable reference. SQLite dev/test still uses `create_all` for speed.
+  CI verifies migrations apply + roll back. (`.\tasks.ps1 migrate` / `makemigration`.)
 - Secrets from a secrets manager (never in the image). Blue/green or rolling deploys;
   health-gated cutover on `/health`.
 

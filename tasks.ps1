@@ -12,7 +12,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('setup', 'test', 'ci', 'api', 'web', 'docker', 'clean', 'help')]
+    [ValidateSet('setup', 'test', 'ci', 'migrate', 'makemigration', 'api', 'web', 'docker', 'clean', 'help')]
     [string]$Command = 'help',
 
     [Parameter(ValueFromRemainingArguments = $true)]
@@ -90,6 +90,21 @@ function Invoke-Ci {
     Write-Host "CI checks passed." -ForegroundColor Green
 }
 
+function Invoke-Migrate {
+    # Apply Alembic migrations to the configured database (DATABASE_URL / .env).
+    Assert-Venv
+    Push-Location $Backend
+    try { & $VenvPy -m alembic upgrade head @Rest } finally { Pop-Location }
+}
+
+function Invoke-MakeMigration {
+    # Autogenerate a migration from model changes:  .\tasks.ps1 makemigration "add foo"
+    Assert-Venv
+    $msg = if ($Rest) { $Rest -join ' ' } else { 'migration' }
+    Push-Location $Backend
+    try { & $VenvPy -m alembic revision --autogenerate -m $msg } finally { Pop-Location }
+}
+
 function Invoke-Api {
     Assert-Venv
     Set-LocalEnv
@@ -138,6 +153,8 @@ Usage:  .\tasks.ps1 <command> [extra args]
   setup    One-time: create backend venv, install Python + frontend deps
   test     Run the backend test suite (pytest)
   ci       Run the full CI checks locally (backend tests+coverage, frontend typecheck+build)
+  migrate  Apply Alembic migrations (alembic upgrade head) to DATABASE_URL
+  makemigration <msg>   Autogenerate a migration from model changes
   api      Run the API locally (SQLite + in-memory queue) -> http://localhost:8000/docs
   web      Run the Next.js frontend -> http://localhost:3000
   docker   Bring up the full stack (Postgres/Redis/MinIO/workers/Grafana) via docker compose
@@ -156,6 +173,8 @@ switch ($Command) {
     'setup' { Invoke-Setup }
     'test' { Invoke-Test }
     'ci' { Invoke-Ci }
+    'migrate' { Invoke-Migrate }
+    'makemigration' { Invoke-MakeMigration }
     'api' { Invoke-Api }
     'web' { Invoke-Web }
     'docker' { Invoke-Docker }

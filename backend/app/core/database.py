@@ -40,20 +40,22 @@ def get_db() -> Generator:
 
 
 def init_db() -> None:
-    """Create tables from ORM metadata (dev/test convenience).
+    """Ensure the schema exists.
 
-    Production uses db/schema.sql + Alembic migrations instead. `create_all`
-    only creates *missing tables* — it never adds columns to an existing one,
-    so a local SQLite dev DB goes stale after a model change. For SQLite in
-    non-production we detect that drift and rebuild (data is disposable in dev).
+    - **SQLite (local dev / tests):** create tables from ORM metadata for
+      convenience. `create_all` only creates *missing tables* — never adds
+      columns — so we also detect drift and rebuild the disposable dev DB.
+    - **PostgreSQL / production:** the schema is owned by **Alembic migrations**
+      (`alembic upgrade head`, run on startup in Docker). We do NOT `create_all`
+      there, so the ORM never silently diverges from the migration history.
     """
-    # Import models so they register on Base.metadata before create_all.
+    # Import models so they register on Base.metadata.
     from app import models  # noqa: F401
 
-    if settings.database_url.startswith("sqlite") and not settings.is_production:
-        _rebuild_sqlite_if_stale()
-
-    Base.metadata.create_all(bind=engine)
+    if engine.url.get_backend_name() == "sqlite":
+        if not settings.is_production:
+            _rebuild_sqlite_if_stale()
+        Base.metadata.create_all(bind=engine)
 
 
 def _rebuild_sqlite_if_stale() -> None:

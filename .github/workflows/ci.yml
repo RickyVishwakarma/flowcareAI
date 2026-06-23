@@ -24,6 +24,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Verify Alembic migrations apply cleanly
+        env:
+          DATABASE_URL: sqlite+pysqlite:///./_ci_migrate.db
+          SECRET_KEY: ci-secret
+        run: alembic upgrade head && alembic downgrade base
+
       - name: Run tests with coverage (fail under 80%)
         run: pytest --cov=app --cov-report=term-missing --cov-report=xml --cov-fail-under=80
 
