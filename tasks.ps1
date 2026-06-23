@@ -78,11 +78,13 @@ function Invoke-Ci {
     }
     finally { Pop-Location }
 
-    Write-Host "==> Frontend: typecheck + build" -ForegroundColor Cyan
+    Write-Host "==> Frontend: typecheck + tests + build" -ForegroundColor Cyan
     Push-Location $Frontend
     try {
         npx tsc --noEmit
         if ($LASTEXITCODE -ne 0) { Write-Host "Typecheck failed." -ForegroundColor Red; exit 1 }
+        npm test
+        if ($LASTEXITCODE -ne 0) { Write-Host "Frontend tests failed." -ForegroundColor Red; exit 1 }
         npm run build
         if ($LASTEXITCODE -ne 0) { Write-Host "Frontend build failed." -ForegroundColor Red; exit 1 }
     }

@@ -55,11 +55,12 @@ Status legend: ✅ done · 🔶 partial · ⬜ planned
   workflow action; leakage KPI on the dashboard
 - ⬜ SLA/aging timers, referring-provider scorecards, closed-loop tracking
 
-## Phase 6 — Quality & CI ✅ / 🔶
-- ✅ 21 backend integration tests, **87% coverage**
-- ✅ **CI** (`.github/workflows/ci.yml`): backend tests + coverage gate (80%), frontend
-  typecheck + build; `.\tasks.ps1 ci` runs it locally
-- 🔶 Frontend unit/component tests (Vitest) — planned
+## Phase 6 — Quality & CI ✅
+- ✅ 27 backend integration tests, **87% coverage**
+- ✅ **Frontend Vitest tests** — API client (token refresh / single-flight / 401-retry)
+  and the workflow auto-layout algorithm (11 tests)
+- ✅ **CI** (`.github/workflows/ci.yml`): migration apply+rollback, backend tests +
+  coverage gate (80%), frontend typecheck + Vitest + build; `.\tasks.ps1 ci` runs it locally
 - ⬜ Ruff lint gate, Playwright E2E
 
 ## Phase 7 — Hardening & scale 🔶

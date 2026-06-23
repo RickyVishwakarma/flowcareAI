@@ -11,8 +11,8 @@ scheduled patient, automatically.
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&logoColor=white)
 ![Claude](https://img.shields.io/badge/AI-Claude%20Opus%204.8-D97757)
-![Tests](https://img.shields.io/badge/tests-21%20passing-3fb950)
-![Coverage](https://img.shields.io/badge/coverage-87%25-3fb950)
+![Tests](https://img.shields.io/badge/tests-27%20backend%20%C2%B7%2011%20frontend-3fb950)
+![Coverage](https://img.shields.io/badge/backend%20coverage-87%25-3fb950)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 </div>
@@ -257,13 +257,16 @@ cd backend && pytest --cov=app          # 21 integration tests, 87% coverage
 python scripts/verify_live.py http://localhost:8000   # live HTTP smoke check
 ```
 
-- **Backend:** 21 integration tests (pipeline, Twilio, review, workflow editor, auth,
-  dashboard, tasks) driving the real app via `TestClient` — **87% coverage**.
+- **Backend:** 27 integration tests (pipeline, Twilio, review, workflow editor, auth,
+  dashboard, tasks, provider matching) driving the real app via `TestClient` — **87% coverage**.
+- **Frontend:** 11 Vitest unit tests for the API client (token refresh / single-flight /
+  401-retry) and the workflow auto-layout algorithm.
 - **Every feature** is additionally verified end-to-end against a live server each
   change, including the workflow engine executing a user-built graph on a real upload.
 - **Continuous Integration** ([.github/workflows/ci.yml](.github/workflows/ci.yml)):
-  on every push/PR, GitHub Actions runs the backend test suite with a **coverage gate
-  (fail under 80%)** and the frontend **typecheck + production build**.
+  on every push/PR, GitHub Actions verifies **Alembic migrations apply + roll back**, runs
+  the backend suite with a **coverage gate (fail under 80%)**, and runs the frontend
+  **typecheck + Vitest + build**.
 - Run the same checks locally before pushing: **`.\tasks.ps1 ci`**.
 
 > CI activates once the repo is pushed to GitHub (`git init` → push). Add a status

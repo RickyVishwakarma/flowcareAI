@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { api, type Workflow, type WorkflowNode } from "@/lib/api";
+import { layeredLayout } from "@/lib/layout";
 
 // ── Node catalog ─────────────────────────────────────────────────────
 const TRIGGERS = ["referral.received", "patient.created", "insurance.verified", "appointment.scheduled"];
@@ -73,33 +74,8 @@ const PAD = 32;
 
 function autoLayout(nodes: ENode[]): ENode[] {
   if (nodes.length === 0) return nodes;
-  const byKey = new Map(nodes.map((n) => [n.node_key, n]));
-  const depth = new Map<string, number>();
-  const root = nodes.find((n) => n.kind === "trigger") ?? nodes[0];
-
-  const queue: [string, number][] = [[root.node_key, 0]];
-  while (queue.length) {
-    const [key, d] = queue.shift()!;
-    if (depth.has(key)) continue;
-    depth.set(key, d);
-    const node = byKey.get(key);
-    if (!node) continue;
-    for (const target of Object.values(node.next)) {
-      if (target && byKey.has(target) && !depth.has(target)) queue.push([target, d + 1]);
-    }
-  }
-  const maxDepth = Math.max(0, ...depth.values());
-  nodes.forEach((n) => {
-    if (!depth.has(n.node_key)) depth.set(n.node_key, maxDepth + 1);
-  });
-
-  const rowCursor = new Map<number, number>();
-  return nodes.map((n) => {
-    const d = depth.get(n.node_key) ?? 0;
-    const row = rowCursor.get(d) ?? 0;
-    rowCursor.set(d, row + 1);
-    return { ...n, position: { x: PAD + d * COL_W, y: PAD + row * ROW_GAP } };
-  });
+  const positions = layeredLayout(nodes, { colWidth: COL_W, rowGap: ROW_GAP, pad: PAD });
+  return nodes.map((n) => ({ ...n, position: positions.get(n.node_key) ?? n.position }));
 }
 
 export function WorkflowEditor({

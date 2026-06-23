@@ -268,8 +268,10 @@ See [ROADMAP.md](ROADMAP.md).
   `TestClient` (SQLite + eager Celery), covering the pipeline, Twilio adapter, review
   queue, workflow editor, auth (rotation/reuse/lockout/verification), dashboard, and
   tasks — **87% coverage**.
+- **Frontend:** 11 Vitest unit tests (`frontend/lib/*.test.ts`) for the API client's
+  token refresh (single-flight, 401-retry) and the shared workflow auto-layout algorithm.
 - **Live verification:** `backend/scripts/verify_live.py` plus per-feature scripts assert
   each feature end-to-end against a running server.
-- **CI** (`.github/workflows/ci.yml`): every push/PR runs backend `pytest` with a
-  **coverage gate (fail under 80%)** and the frontend **typecheck + production build**.
-  Run the same checks locally with `.\tasks.ps1 ci`.
+- **CI** (`.github/workflows/ci.yml`): every push/PR verifies Alembic migrations apply +
+  roll back, runs backend `pytest` with a **coverage gate (fail under 80%)**, and runs the
+  frontend **typecheck + Vitest + build**. Run the same checks locally with `.\tasks.ps1 ci`.
