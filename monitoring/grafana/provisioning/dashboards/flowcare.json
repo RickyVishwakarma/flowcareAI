@@ -1,0 +1,80 @@
+{
+  "title": "FlowCare AI — Operations",
+  "uid": "flowcare-ops",
+  "schemaVersion": 39,
+  "timezone": "browser",
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Workflow success rate",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(rate(flowcare_workflow_executions_total{status=\"succeeded\"}[5m])) / clamp_min(sum(rate(flowcare_workflow_executions_total[5m])), 0.0001)",
+          "legendFormat": "success rate"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percentunit" } }
+    },
+    {
+      "id": 2,
+      "title": "Failed workflows (5m rate)",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
+      "targets": [
+        { "expr": "sum(rate(flowcare_workflow_executions_total{status=\"failed\"}[5m]))", "legendFormat": "failed/s" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Queue depth",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 0 },
+      "targets": [
+        { "expr": "flowcare_queue_depth", "legendFormat": "{{queue}}" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Referral processing time (p50/p95)",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum(rate(flowcare_referral_processing_seconds_bucket[5m])) by (le))", "legendFormat": "p50" },
+        { "expr": "histogram_quantile(0.95, sum(rate(flowcare_referral_processing_seconds_bucket[5m])) by (le))", "legendFormat": "p95" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" } }
+    },
+    {
+      "id": 5,
+      "title": "OCR accuracy (avg confidence)",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+      "targets": [
+        { "expr": "sum(rate(flowcare_ocr_confidence_sum[5m])) / clamp_min(sum(rate(flowcare_ocr_confidence_count[5m])), 0.0001)", "legendFormat": "avg confidence" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percentunit", "max": 1 } }
+    },
+    {
+      "id": 6,
+      "title": "Insurance verification failures",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 13 },
+      "targets": [
+        { "expr": "sum(rate(flowcare_insurance_verification_failures_total[5m])) by (reason)", "legendFormat": "{{reason}}" }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Referrals received by source",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 13 },
+      "targets": [
+        { "expr": "sum(rate(flowcare_referrals_received_total[5m])) by (source)", "legendFormat": "{{source}}" }
+      ]
+    }
+  ]
+}
