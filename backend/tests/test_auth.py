@@ -58,6 +58,40 @@ def test_email_verification_flow(client):
     assert client.post("/api/v1/auth/verify-email", json={"token": "garbage"}).status_code == 400
 
 
+def test_password_reset_flow(client):
+    email = _email()
+    tokens = client.post(
+        "/api/v1/auth/signup",
+        json={"organization_name": "Reset Clinic", "email": email, "password": "originalpw1"},
+    ).json()
+
+    # Forgot password → dev returns the reset link; response never reveals existence.
+    fp = client.post("/api/v1/auth/forgot-password", json={"email": email})
+    assert fp.status_code == 200
+    assert "if an account exists" in fp.json()["detail"].lower()
+    reset_link = fp.json()["reset_link"]
+    assert reset_link, fp.json()
+    token = reset_link.split("token=")[1]
+
+    # Unknown email → same generic 200, no link.
+    unknown = client.post("/api/v1/auth/forgot-password", json={"email": "nobody@nowhere.com"})
+    assert unknown.status_code == 200
+    assert unknown.json()["reset_link"] is None
+
+    # Reset with the token → succeeds and revokes existing sessions.
+    r = client.post("/api/v1/auth/reset-password", json={"token": token, "new_password": "brandnewpw1"})
+    assert r.status_code == 200
+    # Old refresh token is dead after reset.
+    assert client.post("/api/v1/auth/refresh", json={"refresh_token": tokens["refresh_token"]}).status_code == 401
+
+    # New password works; old one doesn't.
+    assert client.post("/api/v1/auth/login", json={"email": email, "password": "brandnewpw1"}).status_code == 200
+    assert client.post("/api/v1/auth/login", json={"email": email, "password": "originalpw1"}).status_code == 401
+
+    # A used/garbage token is rejected.
+    assert client.post("/api/v1/auth/reset-password", json={"token": "garbage", "new_password": "whatever123"}).status_code == 400
+
+
 def test_seeded_admin_is_verified(client):
     tok = client.post(
         "/api/v1/auth/login",

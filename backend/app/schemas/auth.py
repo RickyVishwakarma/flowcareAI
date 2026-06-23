@@ -82,6 +82,20 @@ class VerifyEmailRequest(BaseModel):
     token: str
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ForgotPasswordResponse(BaseModel):
+    detail: str
+    reset_link: str | None = None  # non-prod only, for testing without an inbox
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str = Field(min_length=8)
+
+
 class SignupResponse(Token):
     """Tokens plus (in non-prod) the verification link, so the flow is testable."""
 

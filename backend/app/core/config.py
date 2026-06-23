@@ -54,6 +54,15 @@ class Settings(BaseSettings):
     twilio_base_url: str = "https://api.twilio.com"
     twilio_timeout_seconds: float = 10.0
 
+    # Email (SMTP) — leave blank to use the logged mock sender
+    smtp_host: str | None = None
+    smtp_port: int = 587
+    smtp_user: str | None = None
+    smtp_password: str | None = None
+    smtp_from: str = "FlowCare AI <no-reply@flowcare.ai>"
+    smtp_use_tls: bool = True
+    frontend_base_url: str = "http://localhost:3000"
+
     # Seed admin
     first_admin_email: str = "admin@flowcare.ai"
     first_admin_password: str = "admin12345"
@@ -73,6 +82,10 @@ class Settings(BaseSettings):
             and self.twilio_auth_token
             and (self.twilio_from_number or self.twilio_messaging_service_sid)
         )
+
+    @property
+    def has_smtp(self) -> bool:
+        return bool(self.smtp_host)
 
 
 @lru_cache

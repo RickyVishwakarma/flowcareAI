@@ -13,7 +13,9 @@ from app.core.config import settings
 ACCESS = "access"
 REFRESH = "refresh"
 VERIFY = "verify"
+RESET = "reset"
 EMAIL_TOKEN_EXPIRE_HOURS = 24
+RESET_TOKEN_EXPIRE_HOURS = 1
 
 # bcrypt only hashes the first 72 bytes; truncate explicitly to avoid a
 # ValueError on longer inputs with bcrypt >= 4.1.
@@ -80,6 +82,12 @@ def create_refresh_token(subject: str, jti: str | None = None, **claims: Any) ->
 def create_email_token(subject: str, **claims: Any) -> str:
     return _create_token(
         subject, VERIFY, timedelta(hours=EMAIL_TOKEN_EXPIRE_HOURS), **claims
+    )
+
+
+def create_reset_token(subject: str, **claims: Any) -> str:
+    return _create_token(
+        subject, RESET, timedelta(hours=RESET_TOKEN_EXPIRE_HOURS), **claims
     )
 
 

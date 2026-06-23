@@ -247,6 +247,16 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ token }),
     }),
+  forgotPassword: (email: string) =>
+    request<{ detail: string; reset_link: string | null }>("/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    }),
+  resetPassword: (token: string, new_password: string) =>
+    request<{ detail: string }>("/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify({ token, new_password }),
+    }),
   resendVerification: () =>
     request<{ detail: string; verification_link: string | null }>("/auth/resend-verification", {
       method: "POST",

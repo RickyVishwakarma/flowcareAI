@@ -29,8 +29,9 @@ Status legend: ✅ done · 🔶 partial · ⬜ planned
 - ✅ Notifications (email/SMS/webhook/in-app) — mock senders by default
 - ✅ **Real Twilio SMS adapter** — live Messages API, E.164 validation, retryable vs
   permanent errors, graceful mock fallback. `ProviderResult`/`ProviderError` abstraction.
-- 🔶 Email: mock sender + verification mechanism wired (`email_service.py`) — real
-  SES/SMTP delivery pending
+- ✅ **Real email via SMTP** (`email_service.py`) — verification + password-reset emails
+  send through any SMTP provider (Gmail/Mailtrap/SendGrid/SES) when configured; logged
+  mock fallback otherwise.
 - ⬜ Remaining real adapters: AWS Textract, a clearinghouse (Availity/Change/Stedi),
   calendars (Cal/Google) — all follow the `ProviderResult`/`ProviderError` shape
 
@@ -39,8 +40,9 @@ Status legend: ✅ done · 🔶 partial · ⬜ planned
 - ✅ Rotating refresh tokens with server-side sessions (`refresh_sessions`)
 - ✅ Refresh-token reuse detection (revokes the session family)
 - ✅ Brute-force lockout (5 fails → 15 min); logout / logout-all / change-password
-- ✅ Frontend: transparent token refresh, signup/verify pages, sticky nav with user/org
-- ⬜ Password reset, SSO (SAML/OIDC), real email delivery
+- ✅ **Forgot / reset password** — emailed token, no user enumeration, revokes all sessions
+- ✅ Frontend: transparent token refresh, signup/verify/forgot/reset pages, sticky nav
+- ⬜ SSO (SAML/OIDC)
 
 ## Phase 5 — Operations UX ✅
 - ✅ **Human-in-the-loop review queue** — correct failed extractions, re-validate, re-run

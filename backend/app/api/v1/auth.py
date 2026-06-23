@@ -20,8 +20,10 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, require_roles
 from app.core.database import get_db
 from app.core.security import (
+    RESET,
     VERIFY,
     create_email_token,
+    create_reset_token,
     decode_token,
     hash_password,
     verify_password,
@@ -30,12 +32,15 @@ from app.models.base import UserRole
 from app.models.organization import Organization, User
 from app.schemas.auth import (
     ChangePasswordRequest,
+    ForgotPasswordRequest,
+    ForgotPasswordResponse,
     LoginRequest,
     LogoutRequest,
     MeResponse,
     MessageResponse,
     RefreshRequest,
     ResendVerificationResponse,
+    ResetPasswordRequest,
     SignupRequest,
     SignupResponse,
     Token,
@@ -128,6 +133,48 @@ def resend_verification(
         detail="Verification email sent",
         verification_link=link if email_service.expose_link_in_response() else None,
     )
+
+
+@router.post("/forgot-password", response_model=ForgotPasswordResponse)
+def forgot_password(
+    payload: ForgotPasswordRequest, db: Session = Depends(get_db)
+) -> ForgotPasswordResponse:
+    """Request a password-reset link. Always returns 200 (no user enumeration)."""
+    user = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
+    link = None
+    if user and user.is_active:
+        token = create_reset_token(user.id)
+        sent = email_service.send_password_reset_email(user.email, token)
+        if email_service.expose_link_in_response():
+            link = sent
+    return ForgotPasswordResponse(
+        detail="If an account exists for that email, a reset link has been sent.",
+        reset_link=link,
+    )
+
+
+@router.post("/reset-password", response_model=MessageResponse)
+def reset_password(
+    payload: ResetPasswordRequest, db: Session = Depends(get_db)
+) -> MessageResponse:
+    try:
+        decoded = decode_token(payload.token)
+    except jwt.PyJWTError as exc:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset link") from exc
+    if decoded.get("type") != RESET:
+        raise HTTPException(status_code=400, detail="Not a password-reset token")
+    user = db.get(User, decoded.get("sub"))
+    if user is None or not user.is_active:
+        raise HTTPException(status_code=400, detail="Invalid reset link")
+
+    user.hashed_password = hash_password(payload.new_password)
+    user.failed_login_attempts = 0
+    user.locked_until = None
+    db.flush()
+    # Invalidate every existing session — a reset implies the account may be compromised.
+    auth_service.revoke_all_for_user(db, user.id)
+    db.commit()
+    return MessageResponse(detail="Password reset. You can now sign in.")
 
 
 @router.post("/login", response_model=Token)

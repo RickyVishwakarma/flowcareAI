@@ -58,12 +58,14 @@ export default function LoginPage() {
           {loading ? "Signing in…" : "Sign in"}
         </button>
       </form>
-      <p className="mt-4 text-sm text-slate-600">
-        No account?{" "}
+      <div className="mt-4 flex justify-between text-sm text-slate-600">
         <Link href="/signup" className="font-medium text-brand hover:underline">
           Create an organization
         </Link>
-      </p>
+        <Link href="/forgot-password" className="text-slate-500 hover:text-brand hover:underline">
+          Forgot password?
+        </Link>
+      </div>
     </div>
   );
 }
