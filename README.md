@@ -144,6 +144,11 @@ POST /referrals → store + REF-id → [queue] process_referral
 
 ---
 
+## ☁️ Deploy live
+
+Backend + Postgres on **Render** (one-click [`render.yaml`](render.yaml) blueprint),
+frontend on **Vercel**. Step-by-step: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
 ## 🚀 Quick start
 
 ### Full stack (Docker)

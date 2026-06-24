@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -16,6 +17,8 @@ class Settings(BaseSettings):
     secret_key: str = "change-me"
     api_v1_prefix: str = "/api/v1"
     project_name: str = "FlowCare AI"
+    # Comma-separated allowed origins for CORS, or "*" for any.
+    cors_origins: str = "*"
 
     # Database
     database_url: str = "postgresql+psycopg://flowcare:flowcare@localhost:5432/flowcare"
@@ -67,6 +70,20 @@ class Settings(BaseSettings):
     first_admin_email: str = "admin@flowcare.ai"
     first_admin_password: str = "admin12345"
 
+    @field_validator("database_url")
+    @classmethod
+    def _normalize_db_url(cls, v: str) -> str:
+        # Managed Postgres (Render/Heroku/etc.) hand out postgres:// or
+        # postgresql:// URLs; pin them to the psycopg v3 driver we use.
+        for prefix in ("postgresql+psycopg://", "sqlite"):
+            if v.startswith(prefix):
+                return v
+        if v.startswith("postgres://"):
+            return "postgresql+psycopg://" + v[len("postgres://"):]
+        if v.startswith("postgresql://"):
+            return "postgresql+psycopg://" + v[len("postgresql://"):]
+        return v
+
     @property
     def is_production(self) -> bool:
         return self.environment.lower() in {"production", "prod"}
@@ -74,6 +91,12 @@ class Settings(BaseSettings):
     @property
     def has_llm(self) -> bool:
         return bool(self.anthropic_api_key)
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        if self.cors_origins.strip() == "*":
+            return ["*"]
+        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
     @property
     def has_twilio(self) -> bool:
