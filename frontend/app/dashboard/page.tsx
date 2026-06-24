@@ -31,8 +31,12 @@ export default function DashboardPage() {
   const pct = (n: number) => `${Math.round(n * 100)}%`;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Operations Dashboard</h1>
+    <div className="space-y-8">
+      <header>
+        <span className="eyebrow">Operations</span>
+        <h1 className="mt-3 text-3xl font-extrabold">Dashboard</h1>
+        <p className="mt-1 text-slate-500">A live view of referral volume, quality, and throughput.</p>
+      </header>
 
       {/* KPI cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
@@ -83,18 +87,18 @@ export default function DashboardPage() {
 
 function Kpi({ label, value, sub, accent }: { label: string; value: string | number; sub?: string; accent?: "amber" }) {
   return (
-    <div className={`rounded-lg border bg-white p-4 ${accent === "amber" ? "border-amber-300" : "border-slate-200"}`}>
+    <div className={`card p-5 ${accent === "amber" ? "ring-1 ring-amber-300/60" : ""}`}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
-      <p className={`mt-1 text-2xl font-bold ${accent === "amber" ? "text-amber-600" : "text-slate-900"}`}>{value}</p>
-      {sub && <p className="text-xs text-slate-400">{sub}</p>}
+      <p className={`mt-2 font-display text-2xl font-extrabold ${accent === "amber" ? "text-amber-600" : "text-ink"}`}>{value}</p>
+      {sub && <p className="mt-0.5 text-xs text-slate-400">{sub}</p>}
     </div>
   );
 }
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-5">
-      <h2 className="mb-4 text-sm font-semibold text-slate-700">{title}</h2>
+    <div className="card p-6">
+      <h2 className="mb-4 text-sm font-semibold text-ink">{title}</h2>
       {children}
     </div>
   );

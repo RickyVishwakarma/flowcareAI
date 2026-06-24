@@ -55,9 +55,13 @@ export default function TasksPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold">Task Inbox</h1>
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <span className="eyebrow">Work queue</span>
+          <h1 className="mt-3 text-3xl font-extrabold">Task Inbox</h1>
+          <p className="mt-1 text-slate-500">Tasks your workflows create — claim, prioritize, and close them out.</p>
+        </div>
         <label className="flex items-center gap-2 text-sm text-slate-600">
           <input type="checkbox" checked={mine} onChange={(e) => setMine(e.target.checked)} />
           Assigned to me
@@ -69,18 +73,18 @@ export default function TasksPage() {
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
-            className={`rounded-md px-3 py-1 text-sm ${filter === f.key ? "bg-brand text-white" : "bg-white text-slate-600 hover:bg-slate-100"}`}
+            className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${filter === f.key ? "bg-brand text-white shadow-soft" : "border border-slate-200 bg-white text-slate-600 hover:border-brand hover:text-brand"}`}
           >
             {f.label}
           </button>
         ))}
       </div>
 
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
+      {error && <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="card overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500">
+          <thead className="bg-slate-50/70 text-left text-slate-500">
             <tr>
               <th className="px-4 py-2">Task</th>
               <th className="px-4 py-2">Priority</th>
@@ -121,7 +125,7 @@ export default function TasksPage() {
                       <button
                         disabled={busy === t.id}
                         onClick={() => act(t.id, () => api.claimTask(t.id))}
-                        className="rounded border border-slate-300 px-2 py-0.5 text-xs hover:border-brand disabled:opacity-50"
+                        className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-brand hover:text-brand disabled:opacity-50"
                       >
                         Claim
                       </button>
@@ -130,7 +134,7 @@ export default function TasksPage() {
                       <button
                         disabled={busy === t.id}
                         onClick={() => act(t.id, () => api.updateTask(t.id, { status: "done" }))}
-                        className="rounded bg-brand px-2 py-0.5 text-xs font-medium text-white hover:bg-brand-dark disabled:opacity-50"
+                        className="rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white transition hover:bg-brand-dark disabled:opacity-50"
                       >
                         Done
                       </button>

@@ -67,25 +67,29 @@ export default function ReferralsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Referrals</h1>
-        <label className="cursor-pointer rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <span className="eyebrow">Intake</span>
+          <h1 className="mt-3 text-3xl font-extrabold">Referrals</h1>
+          <p className="mt-1 text-slate-500">Upload a document and watch it move through the pipeline.</p>
+        </div>
+        <label className="btn-primary cursor-pointer">
           {uploading ? "Uploading…" : "Upload referral"}
           <input type="file" className="hidden" onChange={onUpload} accept=".pdf,.png,.jpg,.jpeg,.txt" />
         </label>
       </div>
 
       {error && (
-        <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">
+        <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error} — make sure you are signed in.
         </p>
       )}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="card overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-left text-slate-500">
+            <thead className="bg-slate-50/70 text-left text-slate-500">
               <tr>
                 <th className="px-4 py-2">Code</th>
                 <th className="px-4 py-2">Patient</th>
@@ -120,8 +124,8 @@ export default function ReferralsPage() {
         </div>
 
         {selected && (
-          <div className="rounded-lg border border-slate-200 bg-white p-5">
-            <h2 className="font-semibold">{selected.reference_code}</h2>
+          <div className="card p-6">
+            <h2 className="font-display font-bold text-ink">{selected.reference_code}</h2>
             {selected.extracted_data ? (
               <dl className="mt-3 space-y-1 text-sm">
                 <Row label="Patient" value={selected.extracted_data.patient_name} />
@@ -158,7 +162,7 @@ export default function ReferralsPage() {
                 <button
                   onClick={findProvider}
                   disabled={matching}
-                  className="rounded-md border border-slate-300 px-3 py-1 text-xs font-medium hover:border-brand disabled:opacity-50"
+                  className="btn-ghost px-3 py-1 text-xs disabled:opacity-50"
                 >
                   {matching ? "Matching…" : "Find provider"}
                 </button>

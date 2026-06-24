@@ -51,27 +51,26 @@ export default function WorkflowsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Workflow Builder</h1>
-        <button
-          onClick={newWorkflow}
-          className="rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
-        >
-          + New workflow
-        </button>
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <span className="eyebrow">Automation</span>
+          <h1 className="mt-3 text-3xl font-extrabold">Workflow Builder</h1>
+          <p className="mt-1 text-slate-500">Design the automations that run on every incoming referral.</p>
+        </div>
+        <button onClick={newWorkflow} className="btn-primary">+ New workflow</button>
       </div>
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
+      {error && <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
 
       <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
-        <aside className="rounded-lg border border-slate-200 bg-white p-4">
+        <aside className="card p-4">
           <h3 className="text-xs font-semibold uppercase text-slate-400">Workflows</h3>
           <ul className="mt-2 space-y-1">
             {workflows.map((w) => (
               <li key={w.id}>
                 <button
                   onClick={() => select(w)}
-                  className={`w-full rounded px-2 py-1 text-left text-sm ${
+                  className={`w-full rounded-lg px-2.5 py-1.5 text-left text-sm transition ${
                     active?.id === w.id ? "bg-brand text-white" : "hover:bg-slate-100"
                   }`}
                 >
@@ -84,7 +83,7 @@ export default function WorkflowsPage() {
           </ul>
         </aside>
 
-        <section className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
+        <section className="card min-w-0 p-4">
           {!active ? (
             <p className="text-sm text-slate-500">Select or create a workflow.</p>
           ) : editing ? (
@@ -104,10 +103,7 @@ export default function WorkflowsPage() {
                     <span className="rounded-full bg-teal-100 px-2 py-0.5 text-teal-700">{active.status}</span>
                   </p>
                 </div>
-                <button
-                  onClick={() => setEditing(true)}
-                  className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:border-brand"
-                >
+                <button onClick={() => setEditing(true)} className="btn-ghost">
                   Edit
                 </button>
               </div>

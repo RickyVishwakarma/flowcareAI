@@ -48,21 +48,22 @@ export default function ProvidersPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Provider Directory</h1>
-          <p className="text-sm text-slate-600">Used to match referrals and flag out-of-network leakage.</p>
+          <span className="eyebrow">Network</span>
+          <h1 className="mt-3 text-3xl font-extrabold">Provider Directory</h1>
+          <p className="mt-1 text-slate-500">Used to match referrals and flag out-of-network leakage.</p>
         </div>
-        <button onClick={() => setShowForm((v) => !v)} className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">
+        <button onClick={() => setShowForm((v) => !v)} className={showForm ? "btn-ghost" : "btn-primary"}>
           {showForm ? "Close" : "+ Add provider"}
         </button>
       </div>
 
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
+      {error && <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
 
       {showForm && (
-        <form onSubmit={add} className="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={add} className="card grid gap-3 p-5 sm:grid-cols-2 lg:grid-cols-3">
           <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
           <label className="block text-sm">
             <span className="font-medium text-slate-600">Specialty</span>
@@ -78,14 +79,14 @@ export default function ProvidersPage() {
             In-network
           </label>
           <div className="sm:col-span-2 lg:col-span-3">
-            <button className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">Save provider</button>
+            <button className="btn-primary">Save provider</button>
           </div>
         </form>
       )}
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="card overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500">
+          <thead className="bg-slate-50/70 text-left text-slate-500">
             <tr>
               <th className="px-4 py-2">Provider</th>
               <th className="px-4 py-2">Specialty</th>

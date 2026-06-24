@@ -73,20 +73,21 @@ export default function ReviewPage() {
   const warnings = detail?.validation_report?.warnings ?? [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Review Queue</h1>
-        <p className="text-sm text-slate-600">
+        <span className="eyebrow">Human-in-the-loop</span>
+        <h1 className="mt-3 text-3xl font-extrabold">Review Queue</h1>
+        <p className="mt-1 text-slate-500">
           Referrals that failed automatic validation. Correct the fields and re-run.
         </p>
       </div>
 
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>}
-      {flash && <p className="rounded-md bg-green-50 p-3 text-sm text-green-700">{flash}</p>}
+      {error && <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+      {flash && <p className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700">{flash}</p>}
 
       <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <div className="border-b border-slate-100 bg-slate-50 px-4 py-2 text-xs font-semibold uppercase text-slate-500">
+        <div className="card overflow-hidden">
+          <div className="border-b border-slate-100 bg-slate-50/70 px-4 py-2.5 text-xs font-semibold uppercase text-slate-500">
             Awaiting review ({queue.length})
           </div>
           <ul>
@@ -124,9 +125,9 @@ export default function ReviewPage() {
         </div>
 
         {detail ? (
-          <div className="rounded-lg border border-slate-200 bg-white p-5">
+          <div className="card p-6">
             <div className="mb-4 flex items-baseline justify-between">
-              <h2 className="font-semibold">{detail.reference_code}</h2>
+              <h2 className="font-display font-bold text-ink">{detail.reference_code}</h2>
               <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">
                 {detail.status}
               </span>
@@ -180,7 +181,7 @@ export default function ReviewPage() {
               <button
                 onClick={save}
                 disabled={saving}
-                className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:opacity-50"
+                className="btn-primary disabled:opacity-50"
               >
                 {saving ? "Saving…" : "Save & re-validate"}
               </button>
@@ -195,7 +196,7 @@ export default function ReviewPage() {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center rounded-lg border border-dashed border-slate-200 bg-white p-12 text-sm text-slate-400">
+          <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white p-12 text-sm text-slate-400">
             Select a referral from the queue to review.
           </div>
         )}
