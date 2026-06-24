@@ -25,8 +25,8 @@ Prerequisites: a free [Render](https://render.com) account and a free
      blank to use the deterministic template extractor).
    - Leave `CORS_ORIGINS` and `FRONTEND_BASE_URL` blank **for now** — you'll fill
      them after the frontend is up.
-4. First deploy runs `alembic upgrade head` (preDeploy) then boots the API and
-   seeds the admin user. When it's live, note the URL, e.g.
+4. On boot the container runs `alembic upgrade head` (idempotent), then starts the
+   API and seeds the admin user. When it's live, note the URL, e.g.
    **`https://flowcare-api.onrender.com`**.
 5. Verify: open `https://flowcare-api.onrender.com/health` → `{"status":"ok"}`,
    and `…/docs` for the API.

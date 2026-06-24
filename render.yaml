@@ -3,8 +3,8 @@
 #
 # This deploys a SINGLE backend web service that processes referrals
 # synchronously (Celery in eager mode), so no separate Redis/worker/S3 is
-# needed for a live demo. Migrations run via preDeployCommand. The frontend is
-# deployed separately on Vercel (see docs/DEPLOYMENT.md).
+# needed for a live demo. Migrations run on startup (idempotent). The frontend
+# is deployed separately on Vercel (see docs/DEPLOYMENT.md).
 
 databases:
   - name: flowcare-db
@@ -20,10 +20,9 @@ services:
     dockerfilePath: ./Dockerfile
     plan: free
     healthCheckPath: /health
-    # Apply Alembic migrations before each deploy goes live.
-    preDeployCommand: alembic upgrade head
-    # Bind to the port Render provides.
-    dockerCommand: sh -c "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    # Apply Alembic migrations on startup (idempotent), then bind to Render's
+    # $PORT. preDeployCommand isn't available on the free tier, so we do it here.
+    dockerCommand: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: ENVIRONMENT
         value: production
