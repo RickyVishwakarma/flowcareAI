@@ -3,44 +3,53 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --font-sans: "Inter";
   --font-display: "Plus Jakarta Sans";
 }
 
 body {
-  @apply bg-slate-50 text-slate-600 antialiased;
+  @apply bg-base text-slate-300 antialiased;
 }
 
 @layer base {
   h1, h2, h3, h4 {
-    @apply font-display text-ink;
+    @apply font-display text-white;
     letter-spacing: -0.02em;
+  }
+  /* Dark form controls everywhere by default. */
+  input, select, textarea {
+    @apply border-white/10 bg-white/5 text-white;
+  }
+  input::placeholder, textarea::placeholder {
+    @apply text-slate-500;
+  }
+  option {
+    @apply bg-elevated text-white;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-2.5
-           text-sm font-semibold text-white shadow-soft transition
-           hover:bg-brand-dark hover:shadow-none focus:outline-none focus:ring-2 focus:ring-brand/40;
+           text-sm font-semibold text-[#08090c] shadow-soft transition
+           hover:bg-brand-dark hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-brand/40;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-200
-           bg-white px-5 py-2.5 text-sm font-semibold text-ink transition
-           hover:border-brand hover:text-brand;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/10
+           bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 transition
+           hover:border-brand/50 hover:text-white;
   }
   .card {
-    @apply rounded-2xl border border-slate-100 bg-white shadow-card;
+    @apply rounded-2xl border border-white/10 bg-surface shadow-card;
   }
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/5
-           px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-dark;
+    @apply inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10
+           px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand;
   }
   .gradient-text {
-    @apply bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-teal-300 via-emerald-300 to-cyan-300 bg-clip-text text-transparent;
   }
-  /* Break a section out of the centered container to span the full viewport. */
   .full-bleed {
     width: 100vw;
     margin-left: calc(50% - 50vw);

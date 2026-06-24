@@ -52,7 +52,7 @@ export default function ProvidersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Provider Directory</h1>
-          <p className="text-sm text-slate-600">Used to match referrals and flag out-of-network leakage.</p>
+          <p className="text-sm text-slate-300">Used to match referrals and flag out-of-network leakage.</p>
         </div>
         <button onClick={() => setShowForm((v) => !v)} className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark">
           {showForm ? "Close" : "+ Add provider"}
@@ -62,18 +62,18 @@ export default function ProvidersPage() {
       {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
 
       {showForm && (
-        <form onSubmit={add} className="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:grid-cols-2 lg:grid-cols-3">
+        <form onSubmit={add} className="grid gap-3 rounded-lg border border-white/10 bg-surface p-4 sm:grid-cols-2 lg:grid-cols-3">
           <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
           <label className="block text-sm">
-            <span className="font-medium text-slate-600">Specialty</span>
-            <select value={form.specialty} onChange={(e) => setForm({ ...form, specialty: e.target.value })} className="mt-1 w-full rounded border border-slate-300 px-2 py-1.5">
+            <span className="font-medium text-slate-300">Specialty</span>
+            <select value={form.specialty} onChange={(e) => setForm({ ...form, specialty: e.target.value })} className="mt-1 w-full rounded border border-white/15 px-2 py-1.5">
               {SPECIALTIES.map((s) => <option key={s}>{s}</option>)}
             </select>
           </label>
           <Field label="Accepted insurances (comma-sep)" value={form.accepted_insurances} onChange={(v) => setForm({ ...form, accepted_insurances: v })} placeholder="Aetna, Cigna, United" />
           <Field label="Location" value={form.location} onChange={(v) => setForm({ ...form, location: v })} />
           <Field label="Wait (days)" value={String(form.current_wait_days)} onChange={(v) => setForm({ ...form, current_wait_days: Number(v) || 0 })} type="number" />
-          <label className="flex items-center gap-2 self-end text-sm text-slate-600">
+          <label className="flex items-center gap-2 self-end text-sm text-slate-300">
             <input type="checkbox" checked={form.in_network} onChange={(e) => setForm({ ...form, in_network: e.target.checked })} />
             In-network
           </label>
@@ -83,9 +83,9 @@ export default function ProvidersPage() {
         </form>
       )}
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="overflow-hidden rounded-lg border border-white/10 bg-surface">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500">
+          <thead className="bg-white/5 text-left text-slate-400">
             <tr>
               <th className="px-4 py-2">Provider</th>
               <th className="px-4 py-2">Specialty</th>
@@ -96,7 +96,7 @@ export default function ProvidersPage() {
           </thead>
           <tbody>
             {providers.map((p) => (
-              <tr key={p.id} className="border-t border-slate-100">
+              <tr key={p.id} className="border-t border-white/10">
                 <td className="px-4 py-2">
                   <div className="font-medium">{p.name}</div>
                   {p.location && <div className="text-xs text-slate-400">{p.location}</div>}
@@ -107,7 +107,7 @@ export default function ProvidersPage() {
                     {p.in_network ? "in-network" : "out-of-network"}
                   </span>
                 </td>
-                <td className="px-4 py-2 text-xs text-slate-500">{p.accepted_insurances.join(", ") || "—"}</td>
+                <td className="px-4 py-2 text-xs text-slate-400">{p.accepted_insurances.join(", ") || "—"}</td>
                 <td className="px-4 py-2">{p.current_wait_days}d</td>
               </tr>
             ))}
@@ -124,8 +124,8 @@ export default function ProvidersPage() {
 function Field({ label, value, onChange, placeholder, type = "text", required }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string; required?: boolean }) {
   return (
     <label className="block text-sm">
-      <span className="font-medium text-slate-600">{label}</span>
-      <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} type={type} required={required} className="mt-1 w-full rounded border border-slate-300 px-2 py-1.5" />
+      <span className="font-medium text-slate-300">{label}</span>
+      <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} type={type} required={required} className="mt-1 w-full rounded border border-white/15 px-2 py-1.5" />
     </label>
   );
 }

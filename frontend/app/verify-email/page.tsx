@@ -31,7 +31,7 @@ function VerifyInner() {
 
   return (
     <div className="mx-auto max-w-md text-center">
-      {state === "verifying" && <p className="text-slate-600">Verifying your email…</p>}
+      {state === "verifying" && <p className="text-slate-300">Verifying your email…</p>}
       {state === "ok" && (
         <div className="rounded-lg border border-green-200 bg-green-50 p-6">
           <p className="text-lg font-semibold text-green-700">✓ Email verified</p>
@@ -56,7 +56,7 @@ function VerifyInner() {
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={<p className="text-center text-slate-500">Loading…</p>}>
+    <Suspense fallback={<p className="text-center text-slate-400">Loading…</p>}>
       <VerifyInner />
     </Suspense>
   );

@@ -64,7 +64,7 @@ export default function WorkflowsPage() {
       {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>}
 
       <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
-        <aside className="rounded-lg border border-slate-200 bg-white p-4">
+        <aside className="rounded-lg border border-white/10 bg-surface p-4">
           <h3 className="text-xs font-semibold uppercase text-slate-400">Workflows</h3>
           <ul className="mt-2 space-y-1">
             {workflows.map((w) => (
@@ -72,7 +72,7 @@ export default function WorkflowsPage() {
                 <button
                   onClick={() => select(w)}
                   className={`w-full rounded px-2 py-1 text-left text-sm ${
-                    active?.id === w.id ? "bg-brand text-white" : "hover:bg-slate-100"
+                    active?.id === w.id ? "bg-brand text-white" : "hover:bg-white/10"
                   }`}
                 >
                   {w.name}
@@ -84,9 +84,9 @@ export default function WorkflowsPage() {
           </ul>
         </aside>
 
-        <section className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
+        <section className="min-w-0 rounded-lg border border-white/10 bg-surface p-4">
           {!active ? (
-            <p className="text-sm text-slate-500">Select or create a workflow.</p>
+            <p className="text-sm text-slate-400">Select or create a workflow.</p>
           ) : editing ? (
             <WorkflowEditor
               key={active.id}
@@ -99,14 +99,14 @@ export default function WorkflowsPage() {
               <div className="mb-3 flex items-baseline justify-between">
                 <div>
                   <h2 className="font-semibold">{active.name}</h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Trigger: <code>{active.trigger_event}</code> · v{active.version} ·{" "}
                     <span className="rounded-full bg-teal-100 px-2 py-0.5 text-teal-700">{active.status}</span>
                   </p>
                 </div>
                 <button
                   onClick={() => setEditing(true)}
-                  className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:border-brand"
+                  className="rounded-md border border-white/15 px-3 py-1.5 text-sm font-medium hover:border-brand"
                 >
                   Edit
                 </button>

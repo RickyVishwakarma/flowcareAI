@@ -28,7 +28,7 @@ function Logo() {
           <path d="M3 12h4l2 5 4-12 2 7h6" />
         </svg>
       </span>
-      <span className="font-display text-lg font-extrabold text-ink">FlowCare<span className="text-brand"> AI</span></span>
+      <span className="font-display text-lg font-extrabold text-white">FlowCare<span className="text-brand"> AI</span></span>
     </Link>
   );
 }
@@ -56,7 +56,7 @@ export function SiteNav() {
   const links = authed ? APP_LINKS : MARKETING_LINKS;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-base/70 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6">
         <Logo />
         <div className="hidden items-center gap-6 md:flex">
@@ -64,8 +64,8 @@ export function SiteNav() {
             <Link
               key={href}
               href={href}
-              className={`text-sm font-medium transition hover:text-brand ${
-                pathname === href ? "text-brand" : "text-slate-600"
+              className={`text-sm font-medium transition hover:text-white ${
+                pathname === href ? "text-brand" : "text-slate-400"
               }`}
             >
               {label}
@@ -75,18 +75,18 @@ export function SiteNav() {
 
         <div className="ml-auto flex items-center gap-3">
           {me === undefined ? (
-            <span className="h-4 w-20 animate-pulse rounded bg-slate-100" />
+            <span className="h-4 w-20 animate-pulse rounded bg-white/10" />
           ) : authed ? (
             <>
               <div className="hidden text-right leading-tight sm:block">
-                <div className="text-sm font-semibold text-ink">{me!.organization_name}</div>
-                <div className="text-xs text-slate-400">{me!.email}</div>
+                <div className="text-sm font-semibold text-white">{me!.organization_name}</div>
+                <div className="text-xs text-slate-500">{me!.email}</div>
               </div>
               <button onClick={logout} className="btn-ghost px-4 py-1.5 text-xs">Sign out</button>
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm font-semibold text-slate-600 hover:text-brand">Sign in</Link>
+              <Link href="/login" className="text-sm font-semibold text-slate-300 hover:text-white">Sign in</Link>
               <Link href="/signup" className="btn-primary px-4 py-1.5">Get started</Link>
             </>
           )}

@@ -48,12 +48,12 @@ export default function ForgotPasswordPage() {
         </div>
       ) : (
         <>
-          <p className="mt-1 text-sm text-slate-600">Enter your email and we'll send a reset link.</p>
+          <p className="mt-1 text-sm text-slate-300">Enter your email and we'll send a reset link.</p>
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
             <div>
               <label className="block text-sm font-medium">Email</label>
               <input
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-white/15 px-3 py-2"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"

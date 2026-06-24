@@ -275,26 +275,26 @@ export function WorkflowEditor({
   const CANVAS_H = 1600;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 top-16 z-20 flex flex-col gap-3 bg-slate-100 p-4">
+    <div className="fixed inset-x-0 bottom-0 top-16 z-20 flex flex-col gap-3 bg-white/10 p-4">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
-        <span className="text-sm font-semibold text-slate-700">Editing:</span>
+      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-white/10 bg-surface p-3">
+        <span className="text-sm font-semibold text-slate-200">Editing:</span>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium"
+          className="rounded-md border border-white/15 px-3 py-1.5 text-sm font-medium"
         />
-        <label className="text-xs text-slate-500">Trigger</label>
+        <label className="text-xs text-slate-400">Trigger</label>
         <select
           value={triggerEvent}
           onChange={(e) => setTriggerEvent(e.target.value)}
-          className="rounded-md border border-slate-300 px-2 py-1.5 text-sm"
+          className="rounded-md border border-white/15 px-2 py-1.5 text-sm"
         >
           {TRIGGERS.map((t) => (
             <option key={t}>{t}</option>
           ))}
         </select>
-        <label className="flex items-center gap-1.5 text-sm text-slate-600">
+        <label className="flex items-center gap-1.5 text-sm text-slate-300">
           <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} />
           Active
         </label>
@@ -302,21 +302,21 @@ export function WorkflowEditor({
         <div className="flex items-center gap-2 text-sm">
           <button
             onClick={() => setShowPalette((v) => !v)}
-            className={`rounded-md border px-2 py-1 text-xs ${showPalette ? "border-brand bg-brand/10 text-brand-dark" : "border-slate-300 text-slate-500"}`}
+            className={`rounded-md border px-2 py-1 text-xs ${showPalette ? "border-brand bg-brand/10 text-brand-dark" : "border-white/15 text-slate-400"}`}
           >
             Palette
           </button>
-          <div className="flex items-center rounded-md border border-slate-300">
-            <button onClick={() => zoomTo(zoom - 0.1)} className="px-2 py-1 hover:bg-slate-100" title="Zoom out">−</button>
-            <span className="w-12 text-center text-xs tabular-nums text-slate-600">{Math.round(zoom * 100)}%</span>
-            <button onClick={() => zoomTo(zoom + 0.1)} className="px-2 py-1 hover:bg-slate-100" title="Zoom in">+</button>
+          <div className="flex items-center rounded-md border border-white/15">
+            <button onClick={() => zoomTo(zoom - 0.1)} className="px-2 py-1 hover:bg-white/10" title="Zoom out">−</button>
+            <span className="w-12 text-center text-xs tabular-nums text-slate-300">{Math.round(zoom * 100)}%</span>
+            <button onClick={() => zoomTo(zoom + 0.1)} className="px-2 py-1 hover:bg-white/10" title="Zoom in">+</button>
           </div>
-          <button onClick={fitToView} className="rounded-md border border-slate-300 px-2 py-1 text-xs hover:border-brand" title="Fit graph to view">
+          <button onClick={fitToView} className="rounded-md border border-white/15 px-2 py-1 text-xs hover:border-brand" title="Fit graph to view">
             Fit
           </button>
           <button
             onClick={() => setShowInspector((v) => !v)}
-            className={`rounded-md border px-2 py-1 text-xs ${showInspector ? "border-brand bg-brand/10 text-brand-dark" : "border-slate-300 text-slate-500"}`}
+            className={`rounded-md border px-2 py-1 text-xs ${showInspector ? "border-brand bg-brand/10 text-brand-dark" : "border-white/15 text-slate-400"}`}
           >
             Inspector
           </button>
@@ -325,12 +325,12 @@ export function WorkflowEditor({
         <div className="ml-auto flex gap-2">
           <button
             onClick={() => setNodes((ns) => autoLayout(ns))}
-            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:border-brand"
+            className="rounded-md border border-white/15 px-3 py-1.5 text-sm hover:border-brand"
             title="Lay the graph out in clean columns"
           >
             Auto-arrange
           </button>
-          <button onClick={onCancel} className="rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:border-slate-400">
+          <button onClick={onCancel} className="rounded-md border border-white/15 px-3 py-1.5 text-sm hover:border-white/30">
             Cancel
           </button>
           <button
@@ -347,7 +347,7 @@ export function WorkflowEditor({
       <div className="flex min-h-0 flex-1 gap-3">
         {/* Palette */}
         {showPalette && (
-          <aside className="w-44 shrink-0 overflow-auto rounded-lg border border-slate-200 bg-white p-3">
+          <aside className="w-44 shrink-0 overflow-auto rounded-lg border border-white/10 bg-surface p-3">
             <p className="text-xs font-semibold uppercase text-slate-400">Drag onto canvas</p>
             <PaletteGroup title="Triggers" items={TRIGGERS} color="bg-violet-100 text-violet-700" />
             <PaletteGroup title="Conditions" items={CONDITIONS} color="bg-amber-100 text-amber-700" />
@@ -356,7 +356,7 @@ export function WorkflowEditor({
         )}
 
         {/* Canvas */}
-        <div ref={scrollRef} className="h-full min-w-0 flex-1 overflow-auto rounded-lg border border-slate-200 bg-slate-50">
+        <div ref={scrollRef} className="h-full min-w-0 flex-1 overflow-auto rounded-lg border border-white/10 bg-white/5">
           {/* Sizer reserves the scaled dimensions so scrollbars track the zoom. */}
           <div style={{ width: CANVAS_W * zoom, height: CANVAS_H * zoom }}>
             <div
@@ -404,7 +404,7 @@ export function WorkflowEditor({
                 style={{ left: n.position.x, top: n.position.y, width: NODE_W }}
               >
                 {/* input handle */}
-                <span className="absolute -left-1.5 top-5 h-3 w-3 rounded-full border-2 border-slate-400 bg-white" />
+                <span className="absolute -left-1.5 top-5 h-3 w-3 rounded-full border-2 border-white/30 bg-surface" />
                 <div className="px-3 py-2">
                   <p className="text-[10px] uppercase tracking-wide text-slate-400">{n.kind}</p>
                   <p className="truncate text-sm font-medium">{n.type}</p>
@@ -412,12 +412,12 @@ export function WorkflowEditor({
                 {/* output handles */}
                 {outcomesOf(n).map((o, i) => (
                   <div key={o} className="flex items-center justify-end gap-1 pr-3" style={{ height: ROW_H }}>
-                    <span className="text-[10px] text-slate-500">{o}</span>
+                    <span className="text-[10px] text-slate-400">{o}</span>
                     <span
                       data-handle="1"
                       onPointerDown={(e) => startLink(e, n.node_key, o)}
                       title={`Drag to connect (${o})`}
-                      className="absolute h-3 w-3 cursor-crosshair rounded-full border-2 border-brand bg-white hover:bg-brand"
+                      className="absolute h-3 w-3 cursor-crosshair rounded-full border-2 border-brand bg-surface hover:bg-brand"
                       style={{ right: -6, top: HEAD_H + i * ROW_H + ROW_H / 2 - 6 }}
                     />
                   </div>
@@ -436,7 +436,7 @@ export function WorkflowEditor({
 
         {/* Inspector */}
         {showInspector && (
-          <aside className="w-72 shrink-0 overflow-auto rounded-lg border border-slate-200 bg-white p-3">
+          <aside className="w-72 shrink-0 overflow-auto rounded-lg border border-white/10 bg-surface p-3">
             {selectedNode ? (
               <Inspector
                 node={selectedNode}
@@ -457,7 +457,7 @@ export function WorkflowEditor({
 function PaletteGroup({ title, items, color }: { title: string; items: string[]; color: string }) {
   return (
     <div className="mt-3">
-      <p className="text-[11px] font-medium text-slate-500">{title}</p>
+      <p className="text-[11px] font-medium text-slate-400">{title}</p>
       <div className="mt-1 flex flex-col gap-1">
         {items.map((i) => (
           <span
@@ -543,8 +543,8 @@ function Inspector({
       )}
 
       {Object.keys(node.next).length > 0 && (
-        <div className="border-t border-slate-100 pt-2">
-          <p className="text-[11px] font-medium text-slate-500">Connections</p>
+        <div className="border-t border-white/10 pt-2">
+          <p className="text-[11px] font-medium text-slate-400">Connections</p>
           {Object.entries(node.next).map(([o, t]) => (
             <div key={o} className="flex items-center justify-between text-xs">
               <span>
@@ -564,11 +564,11 @@ function Inspector({
 function Field({ label, value, onChange, placeholder, textarea }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; textarea?: boolean }) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-slate-600">{label}</span>
+      <span className="text-xs font-medium text-slate-300">{label}</span>
       {textarea ? (
-        <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1 h-16 w-full rounded border border-slate-300 px-2 py-1 text-xs" />
+        <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1 h-16 w-full rounded border border-white/15 px-2 py-1 text-xs" />
       ) : (
-        <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1 w-full rounded border border-slate-300 px-2 py-1 text-xs" />
+        <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1 w-full rounded border border-white/15 px-2 py-1 text-xs" />
       )}
     </label>
   );
@@ -577,8 +577,8 @@ function Field({ label, value, onChange, placeholder, textarea }: { label: strin
 function Select({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (v: string) => void }) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-slate-600">{label}</span>
-      <select value={value} onChange={(e) => onChange(e.target.value)} className="mt-1 w-full rounded border border-slate-300 px-2 py-1 text-xs">
+      <span className="text-xs font-medium text-slate-300">{label}</span>
+      <select value={value} onChange={(e) => onChange(e.target.value)} className="mt-1 w-full rounded border border-white/15 px-2 py-1 text-xs">
         {options.map((o) => (
           <option key={o}>{o}</option>
         ))}
@@ -592,7 +592,7 @@ function JsonField({ label, value, onChange }: { label: string; value: unknown; 
   const [bad, setBad] = useState(false);
   return (
     <label className="block">
-      <span className="text-xs font-medium text-slate-600">{label}</span>
+      <span className="text-xs font-medium text-slate-300">{label}</span>
       <textarea
         value={text}
         onChange={(e) => {
@@ -604,7 +604,7 @@ function JsonField({ label, value, onChange }: { label: string; value: unknown; 
             setBad(true);
           }
         }}
-        className={`mt-1 h-28 w-full rounded border px-2 py-1 font-mono text-[11px] ${bad ? "border-red-400 bg-red-50" : "border-slate-300"}`}
+        className={`mt-1 h-28 w-full rounded border px-2 py-1 font-mono text-[11px] ${bad ? "border-red-400 bg-red-50" : "border-white/15"}`}
       />
     </label>
   );
