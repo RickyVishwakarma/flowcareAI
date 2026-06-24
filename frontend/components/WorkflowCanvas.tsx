@@ -61,11 +61,11 @@ export function WorkflowCanvas({ nodes }: { nodes: WorkflowNode[] }) {
   const pos = useMemo(() => new Map(placed.map((p) => [p.node_key, p])), [placed]);
 
   if (placed.length === 0) {
-    return <p className="text-sm text-slate-400">This workflow has no nodes yet.</p>;
+    return <p className="text-sm text-slate-500">This workflow has no nodes yet.</p>;
   }
 
   return (
-    <div className="overflow-auto rounded-md border border-white/10 bg-white/5" style={{ maxHeight: 520 }}>
+    <div className="overflow-auto rounded-md border border-slate-100 bg-slate-50" style={{ maxHeight: 520 }}>
       <div className="relative" style={{ width, height }}>
         <svg className="absolute inset-0" width={width} height={height}>
           {placed.flatMap((node) =>
@@ -99,7 +99,7 @@ export function WorkflowCanvas({ nodes }: { nodes: WorkflowNode[] }) {
         {placed.map((node) => (
           <div
             key={node.node_key}
-            className={`absolute rounded-md border px-3 py-2 shadow-sm ${KIND_STYLE[node.kind] ?? "border-white/15 bg-surface"}`}
+            className={`absolute rounded-md border px-3 py-2 shadow-sm ${KIND_STYLE[node.kind] ?? "border-slate-300 bg-white"}`}
             style={{ left: node.x, top: node.y, width: NODE_W, height: NODE_H }}
           >
             <p className="text-[10px] uppercase tracking-wide text-slate-400">{node.kind}</p>

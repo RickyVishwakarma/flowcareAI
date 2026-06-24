@@ -30,12 +30,12 @@ export default function LoginPage() {
   return (
     <div className="mx-auto mt-10 max-w-sm card p-8">
       <h1 className="text-2xl font-bold">Sign in</h1>
-      <p className="mt-1 text-sm text-slate-300">Seeded demo: admin@flowcare.ai / admin12345</p>
+      <p className="mt-1 text-sm text-slate-600">Seeded demo: admin@flowcare.ai / admin12345</p>
       <form onSubmit={onSubmit} className="mt-6 space-y-4">
         <div>
           <label className="block text-sm font-medium">Email</label>
           <input
-            className="mt-1 w-full rounded-md border border-white/15 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div>
           <label className="block text-sm font-medium">Password</label>
           <input
-            className="mt-1 w-full rounded-md border border-white/15 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -58,11 +58,11 @@ export default function LoginPage() {
           {loading ? "Signing in…" : "Sign in"}
         </button>
       </form>
-      <div className="mt-4 flex justify-between text-sm text-slate-300">
+      <div className="mt-4 flex justify-between text-sm text-slate-600">
         <Link href="/signup" className="font-medium text-brand hover:underline">
           Create an organization
         </Link>
-        <Link href="/forgot-password" className="text-slate-400 hover:text-brand hover:underline">
+        <Link href="/forgot-password" className="text-slate-500 hover:text-brand hover:underline">
           Forgot password?
         </Link>
       </div>

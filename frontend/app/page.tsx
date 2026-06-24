@@ -41,14 +41,14 @@ export default function Home() {
     <div className="space-y-24 pb-8">
       {/* Hero */}
       <section className="relative pt-8">
-        <div className="pointer-events-none absolute inset-x-[-20%] -top-32 -z-10 h-[520px] bg-hero-glow" aria-hidden />
+        <div className="pointer-events-none absolute inset-x-[-20%] -top-24 -z-10 h-[480px] bg-hero-glow" aria-hidden />
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="animate-fade-up">
             <span className="eyebrow">⚡ AI-native referral automation</span>
             <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl">
               Turn every referral into a <span className="gradient-text">scheduled patient</span> — automatically.
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-slate-400">
+            <p className="mt-5 max-w-xl text-lg text-slate-600">
               FlowCare AI ingests referrals from any channel, extracts and validates the data
               with AI, verifies insurance, and orchestrates the whole lifecycle through a visual
               workflow engine — with a full audit trail.
@@ -57,7 +57,7 @@ export default function Home() {
               <Link href="/signup" className="btn-primary px-6 py-3 text-base">Get started free</Link>
               <Link href="#how" className="btn-ghost px-6 py-3 text-base">See how it works</Link>
             </div>
-            <p className="mt-4 text-sm text-slate-500">No credit card · seeded demo · admin@flowcare.ai / admin12345</p>
+            <p className="mt-4 text-sm text-slate-400">No credit card · seeded demo · admin@flowcare.ai / admin12345</p>
           </div>
           <div className="animate-fade-up lg:justify-self-end">
             <HeroPreview />
@@ -67,18 +67,18 @@ export default function Home() {
 
       {/* Trust strip */}
       <section className="text-center">
-        <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
+        <p className="text-sm font-medium uppercase tracking-wide text-slate-400">
           Built for clinics, specialty groups &amp; health systems
         </p>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-slate-300">
           {["Cardiology", "Neurology", "Orthopedics", "Endocrinology", "Pulmonology"].map((s) => (
-            <span key={s} className="text-lg font-semibold text-slate-600">{s}</span>
+            <span key={s} className="text-lg font-semibold text-slate-400">{s}</span>
           ))}
         </div>
       </section>
 
       {/* Stats band */}
-      <section className="full-bleed border-y border-white/10 bg-surface py-14">
+      <section className="full-bleed bg-ink py-14 text-white">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 lg:grid-cols-4">
           {[
             ["6+", "intake channels"],
@@ -88,7 +88,7 @@ export default function Home() {
           ].map(([n, l]) => (
             <div key={l} className="text-center">
               <div className="font-display text-4xl font-extrabold text-white">{n}</div>
-              <div className="mt-1 text-sm text-slate-500">{l}</div>
+              <div className="mt-1 text-sm text-slate-400">{l}</div>
             </div>
           ))}
         </div>
@@ -99,16 +99,16 @@ export default function Home() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">Platform</span>
           <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">Everything a referral needs, in one place</h2>
-          <p className="mt-3 text-slate-400">From the moment a fax lands to the moment the patient is booked.</p>
+          <p className="mt-3 text-slate-600">From the moment a fax lands to the moment the patient is booked.</p>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <div key={f.title} className="card p-6 transition hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-glow">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand/10 text-brand">
+            <div key={f.title} className="card p-6 transition hover:-translate-y-0.5 hover:shadow-soft">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand/10 text-brand-dark">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
               </span>
               <h3 className="mt-4 text-lg font-bold">{f.title}</h3>
-              <p className="mt-2 text-sm text-slate-400">{f.body}</p>
+              <p className="mt-2 text-sm text-slate-600">{f.body}</p>
             </div>
           ))}
         </div>
@@ -119,16 +119,16 @@ export default function Home() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">Pipeline</span>
           <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">From document to appointment</h2>
-          <p className="mt-3 text-slate-400">A queue-based pipeline so the request path never blocks on a slow AI call.</p>
+          <p className="mt-3 text-slate-600">A queue-based pipeline so the request path never blocks on a slow AI call.</p>
         </div>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
           {STEPS.map((s, i) => (
             <div key={s} className="flex items-center gap-3">
-              <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-surface px-5 py-3">
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-xs font-bold text-[#08090c]">{i + 1}</span>
-                <span className="font-semibold text-white">{s}</span>
+              <div className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white px-5 py-3 shadow-card">
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-brand text-xs font-bold text-white">{i + 1}</span>
+                <span className="font-semibold text-ink">{s}</span>
               </div>
-              {i < STEPS.length - 1 && <span className="text-slate-600">→</span>}
+              {i < STEPS.length - 1 && <span className="text-slate-300">→</span>}
             </div>
           ))}
         </div>
@@ -139,7 +139,7 @@ export default function Home() {
         <div>
           <span className="eyebrow">Most important module</span>
           <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">A workflow engine you can see</h2>
-          <p className="mt-4 text-slate-400">
+          <p className="mt-4 text-slate-600">
             Build automations like Zapier — but for referrals. Drag triggers, conditions, and
             actions onto a canvas, wire them together, and FlowCare runs them on every incoming
             referral with retries, backoff, and a dead-letter queue.
@@ -147,10 +147,10 @@ export default function Home() {
           <ul className="mt-6 space-y-3 text-sm">
             {["IF insurance verified → schedule appointment", "IF missing insurance → request documents", "IF referral incomplete → create review task"].map((r) => (
               <li key={r} className="flex items-center gap-3">
-                <span className="grid h-5 w-5 place-items-center rounded-full bg-brand/10 text-brand">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-brand/10 text-brand-dark">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4 4 10-10" /></svg>
                 </span>
-                <code className="text-slate-300">{r}</code>
+                <code className="text-slate-700">{r}</code>
               </li>
             ))}
           </ul>
@@ -160,15 +160,13 @@ export default function Home() {
       </section>
 
       {/* CTA band */}
-      <section className="full-bleed border-y border-white/10 py-16">
+      <section className="full-bleed bg-gradient-to-br from-teal-600 to-emerald-600 py-16 text-white">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <div className="rounded-3xl border border-brand/20 bg-gradient-to-br from-brand/10 to-transparent p-10 shadow-glow">
-            <h2 className="text-3xl font-extrabold sm:text-4xl">Ready to automate your referrals?</h2>
-            <p className="mt-3 text-slate-400">Spin up the demo in minutes and watch a referral go from fax to scheduled patient.</p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/signup" className="btn-primary px-6 py-3 text-base">Get started free</Link>
-              <Link href="/dashboard" className="btn-ghost px-6 py-3 text-base">View dashboard</Link>
-            </div>
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Ready to automate your referrals?</h2>
+          <p className="mt-3 text-teal-50">Spin up the demo in minutes and watch a referral go from fax to scheduled patient.</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/signup" className="rounded-full bg-white px-6 py-3 text-base font-semibold text-brand-dark transition hover:bg-teal-50">Get started free</Link>
+            <Link href="/dashboard" className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10">View dashboard</Link>
           </div>
         </div>
       </section>
@@ -182,10 +180,10 @@ export default function Home() {
 
 function HeroPreview() {
   return (
-    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-surface p-5 shadow-card">
+    <div className="w-full max-w-md rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-xs text-slate-500">REF-1A2B3C4D</span>
-        <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-0.5 text-xs font-medium text-emerald-300">validated</span>
+        <span className="font-mono text-xs text-slate-400">REF-1A2B3C4D</span>
+        <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">validated</span>
       </div>
       <div className="mt-4 space-y-2 text-sm">
         {[
@@ -194,20 +192,20 @@ function HeroPreview() {
           ["Diagnosis", "Hypertension", "91%"],
           ["Specialty", "Cardiology", "—"],
         ].map(([k, v, c]) => (
-          <div key={k} className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-            <span className="text-slate-500">{k}</span>
+          <div key={k} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+            <span className="text-slate-400">{k}</span>
             <span className="flex items-center gap-2">
-              <span className="font-medium text-white">{v}</span>
+              <span className="font-medium text-ink">{v}</span>
               <span className="text-xs text-brand">{c}</span>
             </span>
           </div>
         ))}
       </div>
-      <div className="mt-4 flex items-center gap-2 rounded-lg border border-brand/20 bg-brand/10 px-3 py-2 text-xs text-brand">
-        <span className="grid h-5 w-5 place-items-center rounded-full bg-brand text-[#08090c]">
+      <div className="mt-4 flex items-center gap-2 rounded-lg bg-brand/5 px-3 py-2 text-xs text-brand-dark">
+        <span className="grid h-5 w-5 place-items-center rounded-full bg-brand text-white">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4 4 10-10" /></svg>
         </span>
-        In-network provider matched · scheduling appointment…
+        In-network provider matched · appointment scheduling…
       </div>
     </div>
   );
@@ -215,19 +213,19 @@ function HeroPreview() {
 
 function WorkflowPreview() {
   const node = (label: string, color: string, cls: string) => (
-    <div className={`absolute ${cls} rounded-lg border ${color} px-3 py-2 text-xs font-semibold`}>{label}</div>
+    <div className={`absolute ${cls} rounded-lg border ${color} px-3 py-2 text-xs font-semibold shadow-card`}>{label}</div>
   );
   return (
-    <div className="relative h-72 overflow-hidden rounded-2xl border border-white/10 bg-surface p-4 shadow-card"
-         style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)", backgroundSize: "18px 18px" }}>
+    <div className="relative h-72 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-card"
+         style={{ backgroundImage: "radial-gradient(#cbd5e1 1px, transparent 1px)", backgroundSize: "18px 18px" }}>
       <svg className="absolute inset-0 h-full w-full" aria-hidden>
-        <path d="M120 56 C 180 56, 180 130, 240 130" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-        <path d="M120 56 C 180 56, 180 210, 240 210" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+        <path d="M120 56 C 180 56, 180 130, 240 130" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        <path d="M120 56 C 180 56, 180 210, 240 210" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
       </svg>
-      {node("referral.received", "border-violet-400/30 bg-violet-400/10 text-violet-200", "left-4 top-10")}
-      {node("if · insurance", "border-amber-400/30 bg-amber-400/10 text-amber-200", "left-[150px] top-[40px]")}
-      {node("verify_insurance", "border-sky-400/30 bg-sky-400/10 text-sky-200", "left-[240px] top-[116px]")}
-      {node("create_task", "border-sky-400/30 bg-sky-400/10 text-sky-200", "left-[240px] top-[196px]")}
+      {node("referral.received", "border-violet-300 bg-violet-50 text-violet-700", "left-4 top-10")}
+      {node("if · insurance", "border-amber-300 bg-amber-50 text-amber-700", "left-[150px] top-[40px]")}
+      {node("verify_insurance", "border-sky-300 bg-sky-50 text-sky-700", "left-[240px] top-[116px]")}
+      {node("create_task", "border-sky-300 bg-sky-50 text-sky-700", "left-[240px] top-[196px]")}
     </div>
   );
 }

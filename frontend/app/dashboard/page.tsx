@@ -26,7 +26,7 @@ export default function DashboardPage() {
   if (error) {
     return <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error} — sign in first.</p>;
   }
-  if (!stats) return <p className="text-slate-400">Loading dashboard…</p>;
+  if (!stats) return <p className="text-slate-500">Loading dashboard…</p>;
 
   const pct = (n: number) => `${Math.round(n * 100)}%`;
 
@@ -83,9 +83,9 @@ export default function DashboardPage() {
 
 function Kpi({ label, value, sub, accent }: { label: string; value: string | number; sub?: string; accent?: "amber" }) {
   return (
-    <div className={`rounded-lg border bg-surface p-4 ${accent === "amber" ? "border-amber-300" : "border-white/10"}`}>
+    <div className={`rounded-lg border bg-white p-4 ${accent === "amber" ? "border-amber-300" : "border-slate-200"}`}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
-      <p className={`mt-1 text-2xl font-bold ${accent === "amber" ? "text-amber-600" : "text-white"}`}>{value}</p>
+      <p className={`mt-1 text-2xl font-bold ${accent === "amber" ? "text-amber-600" : "text-slate-900"}`}>{value}</p>
       {sub && <p className="text-xs text-slate-400">{sub}</p>}
     </div>
   );
@@ -93,8 +93,8 @@ function Kpi({ label, value, sub, accent }: { label: string; value: string | num
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-surface p-5">
-      <h2 className="mb-4 text-sm font-semibold text-slate-200">{title}</h2>
+    <div className="rounded-lg border border-slate-200 bg-white p-5">
+      <h2 className="mb-4 text-sm font-semibold text-slate-700">{title}</h2>
       {children}
     </div>
   );
@@ -135,11 +135,11 @@ function BreakdownBars({ data, colors, total }: { data: Record<string, number>; 
         const w = total ? (count / total) * 100 : 0;
         return (
           <div key={label}>
-            <div className="flex justify-between text-xs text-slate-300">
+            <div className="flex justify-between text-xs text-slate-600">
               <span className="capitalize">{label.replace(/_/g, " ")}</span>
               <span className="font-medium">{count}</span>
             </div>
-            <div className="mt-0.5 h-2 w-full rounded-full bg-white/10">
+            <div className="mt-0.5 h-2 w-full rounded-full bg-slate-100">
               <div
                 className="h-2 rounded-full"
                 style={{ width: `${w}%`, background: colors[label] ?? palette[i % palette.length] }}

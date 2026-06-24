@@ -40,7 +40,7 @@ export default function SignupPage() {
   return (
     <div className="mx-auto mt-10 max-w-sm card p-8">
       <h1 className="text-2xl font-bold">Create your organization</h1>
-      <p className="mt-1 text-sm text-slate-300">
+      <p className="mt-1 text-sm text-slate-600">
         You'll be the admin. Add teammates later from the app.
       </p>
       <form onSubmit={onSubmit} className="mt-6 space-y-4">
@@ -56,7 +56,7 @@ export default function SignupPage() {
           {loading ? "Creating…" : "Create organization"}
         </button>
       </form>
-      <p className="mt-4 text-sm text-slate-300">
+      <p className="mt-4 text-sm text-slate-600">
         Already have an account?{" "}
         <Link href="/login" className="font-medium text-brand hover:underline">
           Sign in
@@ -75,7 +75,7 @@ function Field({
     <div>
       <label className="block text-sm font-medium">{label}</label>
       <input
-        className="mt-1 w-full rounded-md border border-white/15 px-3 py-2"
+        className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         type={type}

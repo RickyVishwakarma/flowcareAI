@@ -49,7 +49,7 @@ function ResetInner() {
         <div>
           <label className="block text-sm font-medium">New password (min 8 chars)</label>
           <input
-            className="mt-1 w-full rounded-md border border-white/15 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -75,7 +75,7 @@ function ResetInner() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<p className="text-center text-slate-400">Loading…</p>}>
+    <Suspense fallback={<p className="text-center text-slate-500">Loading…</p>}>
       <ResetInner />
     </Suspense>
   );

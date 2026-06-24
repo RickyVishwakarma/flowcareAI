@@ -5,13 +5,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Dark, minimal surfaces (Opus / devxlabs vibe).
-        base: "#08090c",
-        surface: "#0e1016",
-        elevated: "#14171f",
         brand: {
-          DEFAULT: "#2dd4bf", // teal-400 — glows on dark
-          dark: "#14b8a6",
+          DEFAULT: "#0d9488",
+          dark: "#0f766e",
           50: "#f0fdfa",
           100: "#ccfbf1",
           200: "#99f6e4",
@@ -26,13 +22,12 @@ export default {
         display: ["var(--font-display)", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 0 0 1px rgba(45,212,191,0.18), 0 18px 50px -18px rgba(45,212,191,0.35)",
-        card: "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 40px -24px rgba(0,0,0,0.8)",
-        glow: "0 0 60px -10px rgba(45,212,191,0.25)",
+        soft: "0 18px 50px -18px rgba(13,148,136,0.35)",
+        card: "0 1px 2px rgba(15,23,42,0.04), 0 12px 32px -16px rgba(15,23,42,0.16)",
       },
       backgroundImage: {
         "hero-glow":
-          "radial-gradient(50% 50% at 50% 0%, rgba(45,212,191,0.18) 0%, rgba(45,212,191,0) 70%)",
+          "radial-gradient(60% 60% at 50% 0%, rgba(20,184,166,0.16) 0%, rgba(20,184,166,0) 70%)",
       },
       keyframes: {
         "fade-up": {
