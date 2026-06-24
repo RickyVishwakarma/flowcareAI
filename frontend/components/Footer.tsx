@@ -8,7 +8,12 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2">
               <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-500 text-white">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6" /></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24">
+                  <path d="M8 12 L14.5 7.5 M8 12 L14.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+                  <circle cx="6.5" cy="12" r="2.4" fill="currentColor" />
+                  <circle cx="16" cy="7" r="2.4" fill="currentColor" />
+                  <circle cx="16" cy="17" r="2.4" fill="currentColor" />
+                </svg>
               </span>
               <span className="font-display text-base font-extrabold text-ink">FlowCare AI</span>
             </div>

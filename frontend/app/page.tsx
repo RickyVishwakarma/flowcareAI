@@ -25,7 +25,7 @@ const FEATURES: { title: string; body: string; icon: React.ReactNode }[] = [
   {
     title: "Provider matching",
     body: "Rank in-network providers by specialty, insurance, and availability — and flag referral leakage.",
-    icon: <path d="M3 12h4l2 5 4-12 2 7h6" />,
+    icon: <path d="M12 21s-6-5.7-6-10a6 6 0 1 1 12 0c0 4.3-6 10-6 10z M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />,
   },
   {
     title: "Audit & analytics",
