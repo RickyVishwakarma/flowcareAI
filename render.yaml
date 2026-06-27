@@ -20,9 +20,10 @@ services:
     dockerfilePath: ./Dockerfile
     plan: free
     healthCheckPath: /health
-    # The image CMD runs backend/start.sh, which applies Alembic migrations
-    # (idempotent) then binds uvicorn to Render's $PORT. (preDeployCommand isn't
-    # available on the free tier, so migrations run on startup instead.)
+    # Run the startup script: applies Alembic migrations (idempotent) then binds
+    # uvicorn to Render's $PORT. Kept as a single shell-safe command (no && or
+    # quotes) so Render doesn't mangle it. (Free tier has no preDeployCommand.)
+    dockerCommand: sh start.sh
     envVars:
       - key: ENVIRONMENT
         value: production
