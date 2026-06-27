@@ -52,6 +52,19 @@ app.add_middleware(
 app.include_router(api_router, prefix=settings.api_v1_prefix)
 
 
+@app.get("/", tags=["system"])
+def root() -> dict:
+    """Friendly landing for the API root (the UI lives on the frontend host)."""
+    return {
+        "service": settings.project_name,
+        "version": __version__,
+        "status": "ok",
+        "docs": "/docs",
+        "health": "/health",
+        "api": settings.api_v1_prefix,
+    }
+
+
 @app.get("/health", tags=["system"])
 def health() -> dict:
     return {"status": "ok", "version": __version__, "llm_enabled": settings.has_llm}
