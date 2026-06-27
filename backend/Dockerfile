@@ -17,8 +17,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+RUN chmod +x start.sh
 
 EXPOSE 8000
 
-# Default command runs the API; the worker service overrides this in compose.
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# start.sh runs migrations then launches uvicorn on $PORT (defaults to 8000).
+# The worker service overrides this command in docker-compose.
+CMD ["sh", "start.sh"]
